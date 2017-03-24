@@ -103,8 +103,11 @@ CommandType | Name
   on a lookup of friendly device names (HIVE defaults). If yours don't match because you've
   renamed a device for example, then you have to resort to the Get-HiveNode method to resolve
   your device id's and pass those to the setters.
+- Enhancement to ColourLight to set various colour parameters and brightness.
+- Add control for HIVE Active Plugs.
+- Additional controls over the receiver.
+- Various other enhancements.
 - Bug fixes.
-
 
 ## Acknowledgements
 - HIVE Rest Api v6 documentation published by alertme
