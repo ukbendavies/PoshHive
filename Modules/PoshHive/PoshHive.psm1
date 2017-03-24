@@ -11,6 +11,8 @@ Disclaimer
 Acknowledgements
 - HIVE Rest Api v6 documentation published by alertme
   http://www.smartofthehome.com/wp-content/uploads/2016/03/AlertMe-API-v6.1-Documentation.pdf
+- HIVE REST API V6.1, great investigation by James Saunders
+  http://www.smartofthehome.com/2016/05/hive-rest-api-v6/
 #>
 
 # const
