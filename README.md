@@ -13,11 +13,10 @@ MIT License. Full license: https://github.com/ukbendavies/PoshHive/blob/master/L
 
 ## Getting Started
 Open a PowerShell v3 command shell (v3 should be default on Windows 8.1++)
-
-Then run the following to import the module you downloaded from GitHub.
  
-### Next let's establish an authenticated session to your HiveHome account
-    
+### Establish an authenticated session to your HiveHome account
+Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavies/PoshHive.
+
    ```powershell
     Import-Module <pathtomodule>\PoshHive.psm1
     $username='your hive username usually email address'
