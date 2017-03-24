@@ -107,6 +107,7 @@ CommandType | Name
 - Add control for HIVE Active Plugs.
 - Additional controls over the receiver.
 - Various other enhancements.
+- Documentation on the public functions.
 - Bug fixes.
 
 ## Acknowledgements
