@@ -10,6 +10,7 @@ Disclaimer
 
 Acknowledgements
 - HIVE Rest Api v6 documentation published by alertme
+  http://www.smartofthehome.com/wp-content/uploads/2016/03/AlertMe-API-v6.1-Documentation.pdf
 #>
 
 # const
@@ -85,8 +86,8 @@ function Connect-HiveSession {
 
 function Get-HiveNode {
 	[CmdletBinding()] param (
-	[Parameter(Mandatory=$false, Position = 0)]
-		[guid] $Id = [guid]::Empty
+		[Parameter(Mandatory=$false, Position = 0)]
+			[guid] $Id = [guid]::Empty
 	)
 	$Uri = [uri]('' + $HiveUri + '/nodes')
 	if ($id -ne [guid]::Empty) {
@@ -142,15 +143,15 @@ function Get-HiveLight {
 
 function Set-HiveLight {
 	[CmdletBinding()] param (
-    [Parameter(Mandatory = $true, Position = 0)]
-        [guid] $Id,
+	[Parameter(Mandatory = $true, Position = 0)]
+		[guid] $Id,
     [Parameter(Mandatory = $false, Position = 1)]
 		[ValidateSet('ON', 'OFF')]
-        [string] $PowerState,
+		[string] $PowerState,
     [Parameter(Mandatory = $false, Position = 2)]
 		[ValidateSet('COLOUR', 'TUNABLE')]
-        [string] $ColourMode
-    )
+		[string] $ColourMode
+	)
 	$Uri = [uri]('' + $HiveUri + '/nodes')
 	if ($id -ne [guid]::Empty) {
 		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
