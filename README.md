@@ -12,7 +12,7 @@ MIT License. Full license: https://github.com/ukbendavies/PoshHive/blob/master/L
 - This work is purely my own experiment after I originally asked for a supported HIVE RestAPI on the British Gas requests forum.
 
 ## Getting Started
-Open a PowerShell v3 command shell (default on Windows 8.1++)
+Open a PowerShell v3 command shell (v3 should be default on Windows 8.1++)
 
 Then run the following to import the module you downloaded from GitHub.
  
