@@ -38,6 +38,14 @@ function GetNodeDataStructure {
 }
 
 # public functions
+function Disconnect-HiveSession {
+	[CmdletBinding()] param ()
+	# todo - workout if there is an actual logoff process
+	# remove existing access token
+	$HiveHeaders.'X-Omnia-Access-Token' = ''
+	Write-Verbose "Removed access token, further calls will fail until new access token is available."
+}
+
 function Connect-HiveSession {
 	[CmdletBinding()] param (
     [Parameter(Mandatory = $true, Position = 0)]
@@ -58,12 +66,15 @@ function Connect-HiveSession {
 		'sessions' = @($session)
 	}
 
-	$body = ConvertTo-Json $sessions 
+	$body = ConvertTo-Json $sessions
+	
+	Disconnect-HiveSession
+	
+	# create new session and get the access token
 	$response = Invoke-RestMethod -Method Post -Uri $Uri.AbsoluteUri -Headers $HiveHeaders -Body $body
-	#todo better response validation
 
+	# store the first session access token for downstream calls
 	$mySession = $response.sessions[0]
-	# store the first session for downstream calls
 	if ($mySession -eq $null -or $mySession -eq '') {
 		throw 'No valid session'
 	}
