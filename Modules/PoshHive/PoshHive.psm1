@@ -14,7 +14,7 @@ Acknowledgements
 #>
 
 # const
-$HiveUri = [uri]'https://api-prod.bgchprod.info:443/omnia'
+$HiveUri = [uri]'https://api-prod.bgchprod.info/omnia'
 $HiveHeaders = @{
 	'Content-Type' = 'application/vnd.alertme.zoo-6.1+json';
 	'Accept' = 'application/vnd.alertme.zoo-6.1+json';
