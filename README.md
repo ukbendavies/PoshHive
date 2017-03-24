@@ -48,13 +48,14 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
     $light = Get-HiveLight
     
     # basic ON or OFF functions
-    Set-HiveLight -Id $light.id -PowerState ON
     Set-HiveLight -Id $light.id -PowerState OFF
+    Set-HiveLight -Id $light.id -PowerState ON
     
     # Changing colour mode
     # TUNABLE = Dimmable in HIVE's terminology
     Set-HiveLight -Id $light.id -ColourMode TUNABLE
     Set-HiveLight -Id $light.id -ColourMode COLOUR
+   
     # you can also combine actions
     Set-HiveLight -Id $light.id -PowerState ON -ColourMode COLOUR
    ```
