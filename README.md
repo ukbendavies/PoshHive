@@ -62,6 +62,7 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
 
 ## Debugging
 
+##### Using Get-HiveEvents
 This is one of the most useful features so far. You can get the events
 for all of the Hive actions submitted to the platform. This is useful for example
 to get the last 5 events and see what the Hive App/WebUI actually did.
@@ -80,6 +81,19 @@ to get the last 5 events and see what the Hive App/WebUI actually did.
     time       : 2017-03-24T21:34:15.613+0000
     properties : @{triggered=; property=targetHeatTemperature; value=20.0}
    ```
+
+##### NOT_AUTHORIZED 
+If you get a not authorized exception as below:
+```powershell
+Invoke-RestMethod : {"errors":[{"code":"NOT_AUTHORIZED"}]}
+```
+This is either because: 
+- supplied credentials are wrong, or quotes have gotten in the way; if
+in doubt use single-quotes to ensure what you enter is what's used. 
+- alternatively the session may have expired in which case simply re-run the 
+  Connect-HiveSession command. In future I may make this to be a default mode 
+  of operation.
+
 
 ## More complete list of functions
 
