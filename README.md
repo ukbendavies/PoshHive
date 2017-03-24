@@ -1,19 +1,21 @@
 # PoshHive
-British Gas HIVE Home PowerShell wrapper that exposes core HIVE platform functionality.
+British Gas HIVE Home powershell wrapper that provides core HIVE platform functionality in a Windows powershell instance
+that can be used interactively, scripted for expanded integrations, or scheduling e.g. at 6pm turn on the Lights (use with 
+basic windows scheduler for this capability).
 
 Copyright 2017 Ben Davies
 
 MIT License. Full license: https://github.com/ukbendavies/PoshHive/blob/master/LICENSE
 
-Disclaimer
+## Disclaimer
 - I do not work with, for and am not in any way associated with British Gas or any organisation that creates or maintains HIVE. 
 - This work is purely my own experiment after I originally asked for a supported HIVE RestAPI on the British Gas requests forum.
 
-Getting Started
+## Getting Started
 - Open a PowerShell v3 command shell (default on windows 8.1++)
 - Then run the following to import the module you downloaded from GitHub.
  
- Firstly establish an authenticated session to your HiveHome account
+### Next let's establish an authenticated session to your HiveHome account
     
    ```powershell
     Import-Module <pathtomodule>\PoshHive.psm1
@@ -22,7 +24,7 @@ Getting Started
     Connect-HiveSession -Username $username -Password $password
    ```
 
-Update the temperature
+### Setting the temperature
 
    ```powershell
     $reciever = Get-HiveReceiver
@@ -40,7 +42,7 @@ Update the temperature
     shown in the Hive App/WebUI.
 
 
-Update the Colour Light
+### Set a Colour Light to on or off
 
    ```powershell
     $light = Get-HiveLight
@@ -57,7 +59,8 @@ Update the Colour Light
     Set-HiveLight -Id $light.id -PowerState ON -ColourMode COLOUR
    ```
 
-Debugging
+## Debugging
+
 This is one of the most useful features so far. You can get the events
 for all of the Hive actions submitted to the platform. This is useful for example
 to get the last 5 events and see what the Hive App/WebUI actually did.
@@ -77,7 +80,7 @@ to get the last 5 events and see what the Hive App/WebUI actually did.
     properties : @{triggered=; property=targetHeatTemperature; value=20.0}
    ```
 
-More complete list of functions
+## More complete list of functions
 
 CommandType | Name
 --- | --- 
@@ -94,7 +97,7 @@ CommandType | Name
    Function |  Set-HiveLight
    Function |  Set-HiveReceiver
 
-Coming soon
+## Coming soon
 - Further abstraction, this was my very first attempt so its not as abstracted as I'd like
 - Fix device indexing. Because of the first point the Get-* functions lookup is done based 
   on a lookup of friendly device names (HIVE defaults). If yours don't match because you've
@@ -103,7 +106,7 @@ Coming soon
 - Bug fixes.
 
 
-Acknowledgements
+## Acknowledgements
 - HIVE Rest Api v6 documentation published by alertme
   http://www.smartofthehome.com/wp-content/uploads/2016/03/AlertMe-API-v6.1-Documentation.pdf
 - HIVE REST API V6.1, great investigation by James Saunders
