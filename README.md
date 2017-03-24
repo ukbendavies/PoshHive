@@ -91,7 +91,7 @@ This is either because:
 - supplied credentials are wrong, or quotes have gotten in the way; if
 in doubt use single-quotes to ensure what you enter is what's used. 
 - alternatively the session may have expired in which case simply re-run the 
-  Connect-HiveSession command. In future I may make this to be a default mode 
+  Connect-HiveSession command. In future this may become a default mode 
   of operation.
 
 
