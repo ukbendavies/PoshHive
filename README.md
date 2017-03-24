@@ -27,8 +27,8 @@ MIT License. Full license: https://github.com/ukbendavies/PoshHive/blob/master/L
 ### Setting the temperature
 
    ```powershell
-    $reciever = Get-HiveReceiver
-    Set-HiveReceiver -Id $reciever.id -TargetTemperature 21
+    $receiver = Get-HiveReceiver
+    Set-HiveReceiver -Id $receiver.id -TargetTemperature 21
    ```
     Note: if you have more than one you might need to do a little more 
     work to get the id for the specific device (receiver in this case) 
@@ -70,7 +70,7 @@ to get the last 5 events and see what the Hive App/WebUI actually did.
    ```
    returns something like this:
    
-   ```javascript
+   ```
     id         : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     href       : https://api.prod.bgchprod.info:8443/omnia/events/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     links      :
