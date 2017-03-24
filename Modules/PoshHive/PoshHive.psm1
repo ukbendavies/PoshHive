@@ -1,15 +1,15 @@
 <#
-British Gas HIVE Home PowerShell wrapper that exposes core HIVE platform functionallity.
+British Gas HIVE Home PowerShell wrapper that exposes core HIVE platform functionality.
 Copyright 2017 Ben Davies
 
 MIT License. Full license: https://github.com/ukbendavies/PoshHive/blob/master/LICENSE
 
 Disclaimer
-- I do not work with, for and am not in any way assiciated with British Gas or any organisation that creates or maintains HIVE. 
+- I do not work with, for and am not in any way associated with British Gas or any organisation that creates or maintains HIVE. 
 - This work is purely my own experiment after I originally asked for a supported HIVE RestAPI on the British Gas requests forum.
 
-Aknowledgements
- - HIVE Rest Api v6 documentation published by alertme
+Acknowledgements
+- HIVE Rest Api v6 documentation published by alertme
 #>
 
 # const
@@ -48,11 +48,11 @@ function Disconnect-HiveSession {
 
 function Connect-HiveSession {
 	[CmdletBinding()] param (
-    [Parameter(Mandatory = $true, Position = 0)]
-        [string] $Username,
-    [Parameter(Mandatory = $true, Position = 1)]
-        [string] $Password 
-    )
+	[Parameter(Mandatory = $true, Position = 0)]
+		[string] $Username,
+	[Parameter(Mandatory = $true, Position = 1)]
+		[string] $Password 
+	)
 	$Uri = [uri]('' + $HiveUri + '/auth/sessions')
 
 	# create hive login data-structure
@@ -85,8 +85,8 @@ function Connect-HiveSession {
 
 function Get-HiveNode {
 	[CmdletBinding()] param (
-		[Parameter(Mandatory=$false, Position = 0)]
-			[guid] $Id = [guid]::Empty
+	[Parameter(Mandatory=$false, Position = 0)]
+		[guid] $Id = [guid]::Empty
 	)
 	$Uri = [uri]('' + $HiveUri + '/nodes')
 	if ($id -ne [guid]::Empty) {
@@ -189,11 +189,11 @@ function Set-HiveLight {
 
 function Set-HiveReceiver {
 	[CmdletBinding()] param (
-    [Parameter(Mandatory = $true, Position = 0)]
-        [guid] $Id,
-    [Parameter(Mandatory = $true, Position = 1)]
-        [uint16] $TargetTemperature 
-    )
+	[Parameter(Mandatory = $true, Position = 0)]
+		[guid] $Id,
+	[Parameter(Mandatory = $true, Position = 1)]
+		[uint16] $TargetTemperature 
+	)
 	$Uri = [uri]('' + $HiveUri + '/nodes')
 	if ($id -ne [guid]::Empty) {
 		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
