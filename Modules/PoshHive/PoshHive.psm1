@@ -86,12 +86,18 @@ function Connect-HiveSession {
 
 function Get-HiveNode {
 	[CmdletBinding()] param (
-		[Parameter(Mandatory=$false, Position = 0)]
-			[guid] $Id = [guid]::Empty
+	[Parameter(Mandatory=$false, Position = 0)]
+		[guid] $Id = [guid]::Empty,
+	[Parameter(Mandatory=$false, Position = 1)]
+		[ValidateNotNullOrEmpty()]
+		[array] $Filter
 	)
 	$Uri = [uri]('' + $HiveUri + '/nodes')
 	if ($id -ne [guid]::Empty) {
 		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
+	}
+	if ($PSBoundParameters.ContainsKey('Filter')) {
+		$Uri = [uri]($Uri.AbsoluteUri + '?fields=' + ($Filter -join ','))
 	}
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
 	return $response.nodes
