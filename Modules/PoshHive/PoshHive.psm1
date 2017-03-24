@@ -25,7 +25,7 @@ $HiveHeaders = @{
 }
 
 # private functions
-function GetNodeDataStructure {
+function GetNodesDataStructure {
 	[CmdletBinding()] param ()
 	# base data-structure for node-attribute representation
 	$nodes = @{
@@ -82,7 +82,7 @@ function Connect-HiveSession {
 		throw 'No valid session'
 	}
 
-	Write-Verbose "Logged in as $($mySession.username) [id:$($mySession.sessionId), newestApiV:$($mySession.latestSupportedApiVersion)]"
+	Write-Host "Logged in as $($mySession.username) [id:$($mySession.sessionId), newestApiV:$($mySession.latestSupportedApiVersion)]"
 	$HiveHeaders.'X-Omnia-Access-Token' = $mySession.sessionId
 }
 
@@ -166,15 +166,15 @@ function Set-HiveLight {
 	}
 	
 	# hive temperature base data-structure
-	$nodes = GetNodeDataStructure
+	$nodes = GetNodesDataStructure
 
 	if ($PSBoundParameters.ContainsKey('PowerState')) {
-		$newState = @{'targetValue' = $PowerState}
+		$newState = @{'targetValue' = $PowerState.ToUpperInvariant()}
 		$nodes.nodes[0].attributes.Add('state', $newState)
 	}
 
 	if ($PSBoundParameters.ContainsKey('ColourMode')) {
-		$newState = @{'targetValue' = $ColourMode}
+		$newState = @{'targetValue' = $ColourMode.ToUpperInvariant()}
 		$nodes.nodes[0].attributes.Add('colourMode', $newState)
 
 		if ($ColourMode -eq 'COLOUR') {
@@ -209,7 +209,7 @@ function Set-HiveReceiver {
 	}
 	
 	# hive temperature base data-structure
-	$nodes = GetNodeDataStructure
+	$nodes = GetNodesDataStructure
 
 	if ($PSBoundParameters.ContainsKey('TargetTemperature')) {
 		$newState = @{'targetValue' = $TargetTemperature}
