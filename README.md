@@ -75,7 +75,9 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
   -------------                  ------------            ------------------             -----------------
         2.0                           2.0                 1490444534755                 1490444534755
    ```
-
+   - my kettle has a reportedValue of 2904.0 (about right).
+   - one of the many hidden features that seem to be present in the hardaware platform but not yet released 
+     in the HIVE software (App/WebUI).
 
 ## Debugging
 
