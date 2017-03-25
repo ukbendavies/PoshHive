@@ -14,6 +14,8 @@ Acknowledgements
 - HIVE REST API V6.1, great investigation by James Saunders
   http://www.smartofthehome.com/2016/05/hive-rest-api-v6/
 #>
+Set-StrictMode -Version Latest
+Set-PsDebug -Strict
 
 # const
 $HiveUri = [uri]'https://api-prod.bgchprod.info/omnia'
