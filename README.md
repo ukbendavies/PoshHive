@@ -31,16 +31,8 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
     Set-HiveReceiver -Id $receiver.id -TargetTemperature 21
    ```
     Note: if you have more than one you might need to do a little more 
-    work to get the id for the specific device (receiver in this case) 
-    that you want to manipulate. For example: 
-
-   ```powershell
-    $nodes = Get-HiveNode -Filter name
-    $nodes | Select-Object -Property name,id
-   ```
-    choose a device name that makes sense to you based on the names as 
-    shown in the Hive App/WebUI.
-
+    work ($receiver would be a set in this case) to get the id for the 
+    specific receiver that you want to manipulate.
 
 ### Set a Colour Light to on or off
 
@@ -94,35 +86,42 @@ in doubt use single-quotes to ensure what you enter is what's used.
   Connect-HiveSession command. In future this may become a default mode 
   of operation.
 
+##### Getting all nodes
+If in doubt you can always see all your nodes (devices) by executing:
+   ```powershell
+    $nodes = Get-HiveNode -Filter name
+    $nodes | Select-Object -Property name, id
+   ```
+choose a node name that makes sense to you based on the names as shown in the 
+Hive App/WebUI.
+
 
 ## More complete list of functions
 
 CommandType | Name
 --- | --- 
-   Function |  Connect-HiveSession
-   Function |  Disconnect-HiveSession
-   Function |  Get-HiveEvents
-   Function |  Get-HiveHub
-   Function |  Get-HiveLight
-   Function |  Get-HiveNode
-   Function |  Get-HiveReceiver
-   Function |  Get-HiveThermostat
-   Function |  Get-HiveTopology
-   Function |  Get-HiveUser
-   Function |  Set-HiveLight
-   Function |  Set-HiveReceiver
+   Function | Connect-HiveSession
+   Function | Disconnect-HiveSession
+   Function | Get-HiveEvents
+   Function | Get-HiveLight
+   Function | Get-HiveNode
+   Function | Get-HiveNodeByType
+   Function | Get-HiveReceiver
+   Function | Get-HiveThermostat
+   Function | Get-HiveTopology
+   Function | Get-HiveUser
+   Function | Get-HiveHub
+   Function | Set-HiveLight
+   Function | Set-HiveReceiver
 
 ## Coming soon
 - Further abstraction, this was my very first attempt so its not as abstracted as I'd like
-- Fix device indexing. Because of the first point the Get-* functions lookup is done based 
-  on a lookup of friendly device names (HIVE defaults). If yours don't match because you've
-  renamed a device for example, then you have to resort to the Get-HiveNode method to resolve
-  your device id's and pass those to the setters.
 - Enhancement to ColourLight to set various colour parameters and brightness.
 - Add control for HIVE Active Plugs.
 - Additional controls over the receiver.
 - Various other enhancements.
 - Documentation on the public functions.
+- Tests
 - Bug fixes.
 
 ## Acknowledgements
