@@ -39,6 +39,40 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
  work ($receiver would be a set in this case) to get the id for the 
  specific receiver that you want to manipulate.
 
+ Note that any Get-* will return an object containing lots of data and this allows access to hidden features.
+ 
+ ```powershell
+ $receiver
+ ```
+ returns
+```
+id           : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+href         : https://api.prod.bgchprod.info:8443/omnia/nodes/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+links        :
+name         : Your Receiver
+nodeType     : http://alertme.com/schema/json/node.class.thermostat.json#
+parentNodeId : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+lastSeen     : 1490444982388
+createdOn    : 1441739428685
+userId       : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+ownerId      : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+attributes   : @{activeScheduleLock=; holidayModeActive=; supportsTransitionsPerDay=; optimumStartAdvanceTimeFactor=;
+               activeOverrides=; activeHeatCoolMode=; holidayModeEnabled=; temperatureSensorMissing=;
+               delayCompensationTime=; holidaySetPoint=; protocol=; supportsScheduleLock=; zone=; model=;
+               supportsHeatCoolModes=; presence=; errorIntegral=; heatingRateEstimate=; previousConfiguration=;
+               holidayMode=; previousWaterMode=; holidayEndDate=; holidayStartTime=; maxHeatTemperature=; nodeType=;
+               previousHeatMode=; lastSeen=; optimumStartMinimumTemperatureChange=; deviceClass=;
+               supportsScheduleDays=; softwareVersion=; optimumStartAdvanceTimeOffset=; swVersion=;
+               initialisationFailure=; manufacturer=; holidayStartDate=; deviceClassName=;
+               supportsScheduleLockDuration=; targetHeatTemperature=; hardwareFailure=; minHeatTemperature=;
+               temperature=; supportsTransitionsPerWeek=; manufactured=; controlMode=; capabilities=;
+               optimumStartEnabled=; LQI=; proportionalThreshold=; hwVersion=; supportsHotWater=; stateHeatingRelay=;
+               schedule=; holidayEndTime=; RSSI=; delayCompensatedTemperature=; previousHeatSetpoint=;
+               selfCalibrationFailure=; optimumStartMaximumAdvanceTime=; supportsTPI=; scheduleLockDuration=;
+               minimumOffCycles=}
+
+ ```
+
 ### Set a Colour Light to on or off
 
    ```powershell
@@ -56,6 +90,27 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
     # you can also combine actions
     Set-HiveLight -Id $light.id -PowerState ON -ColourMode COLOUR
    ```
+
+
+### Set a Colour Light to on or off
+
+   ```powershell
+    $plug = Get-HivePlug
+    
+    # basic ON or OFF functions
+    Set-HivePlug -Id $Plug.id -PowerState OFF
+    Set-HivePlug -Id $Plug.id -PowerState ON
+    
+    # Interestingly the amartplug appears to report energy consumption data
+    $plug.attributes.powerConsumption
+   ```
+   returns the following data where the values of reportedValue do change (unit appears to be in watts)
+   ```
+  reportedValue                  displayValue            reportReceivedTime             reportChangedTime
+  -------------                  ------------            ------------------             -----------------
+        2.0                           2.0                 1490444534755                 1490444534755
+   ```
+
 
 ## Debugging
 
@@ -109,6 +164,7 @@ CommandType | Name
    Function | Disconnect-HiveSession
    Function | Get-HiveEvents
    Function | Get-HiveLight
+   Function | Get-HivePlug
    Function | Get-HiveNode
    Function | Get-HiveNodeByType
    Function | Get-HiveReceiver
@@ -118,11 +174,11 @@ CommandType | Name
    Function | Get-HiveHub
    Function | Set-HiveLight
    Function | Set-HiveReceiver
+   Function | Set-HivePlug
 
 ## Coming soon
 - Further abstraction, this was my very first attempt so its not as abstracted as I'd like
 - Enhancement to ColourLight to set various colour parameters and brightness.
-- Add control for HIVE Active Plugs.
 - Additional controls over the receiver.
 - Various other enhancements.
 - Documentation on the public functions.

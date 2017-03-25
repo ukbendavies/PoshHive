@@ -173,6 +173,14 @@ function Get-HiveHub {
 	return Get-HiveNodeByType -NodeType 'hub' -Minimal:$Minimal
 }
 
+function Get-HivePlug {
+	[CmdletBinding()] param (
+	[Parameter(Mandatory = $false, Position = 0)]
+		[switch] $Minimal
+	)
+	return Get-HiveNodeByType -NodeType 'smartplug' -Minimal:$Minimal
+}
+
 function Get-HiveLight {
 	[CmdletBinding()] param (
 	[Parameter(Mandatory = $false, Position = 0)]
@@ -197,7 +205,7 @@ function Set-HiveLight {
 		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
 	}
 	
-	# hive temperature base data-structure
+	# hive nodes base data-structure
 	$nodes = GetNodesDataStructure
 
 	if ($PSBoundParameters.ContainsKey('PowerState')) {
@@ -209,7 +217,6 @@ function Set-HiveLight {
 		$newState = @{'targetValue' = $ColourMode.ToUpperInvariant()}
 		$nodes.nodes[0].attributes.Add('colourMode', $newState)
 
-		# todo use switch
 		switch ($ColourMode) {
 			'COLOUR' {
 				$newState = @{'targetValue' = 0}
@@ -244,7 +251,7 @@ function Set-HiveReceiver {
 		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
 	}
 	
-	# hive temperature base data-structure
+	# hive nodes base data-structure
 	$nodes = GetNodesDataStructure
 
 	if ($PSBoundParameters.ContainsKey('TargetTemperature')) {
@@ -259,6 +266,36 @@ function Set-HiveReceiver {
 	#todo response processing
 	return $response
 }
+
+function Set-HivePlug {
+	[CmdletBinding()] param (
+	[Parameter(Mandatory = $true, Position = 0)]
+		[guid] $Id,
+    [Parameter(Mandatory = $true, Position = 1)]
+		[ValidateSet('ON', 'OFF')]
+		[string] $PowerState
+	)
+	$Uri = [uri]('' + $HiveUri + '/nodes')
+	if ($id -ne [guid]::Empty) {
+		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
+	}
+	
+	# hive nodes data-structure
+	$nodes = GetNodesDataStructure
+
+	if ($PSBoundParameters.ContainsKey('PowerState')) {
+		$newState = @{'targetValue' = $PowerState.ToUpperInvariant()}
+		$nodes.nodes[0].attributes.Add('state', $newState)
+	}
+
+	$body = ConvertTo-Json $nodes -Depth 6 -Compress
+	$body | Out-String | Write-Verbose
+
+	$response = Invoke-WebRequest -UseBasicParsing -Method Put -Uri $Uri.AbsoluteUri -Headers $HiveHeaders -Body $body
+	#todo response processing
+	return $response
+}
+
 
 # general platform functions
 function Get-HiveEvents {
