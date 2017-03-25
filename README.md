@@ -57,7 +57,7 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
     Set-HiveLight -Id $light.id -PowerState ON -ColourMode COLOUR
    ```
 
-### Set a Colour Light to on or off
+### Set a Smart-Plug to on or off
 
    ```powershell
     $plug = Get-HivePlug
