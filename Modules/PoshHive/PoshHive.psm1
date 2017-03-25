@@ -221,9 +221,9 @@ function Set-HiveLight {
 	} 
 
 	$body = ConvertTo-Json $nodes -Depth 6 -Compress
-	$body | out-string | Write-Host
+	$body | Out-String | Write-Verbose
 
-	$response = Invoke-WebRequest -UseBasicParsing -Method Put -Uri $Uri.AbsoluteUri -Headers $HiveHeaders -Body $body -Verbose
+	$response = Invoke-WebRequest -UseBasicParsing -Method Put -Uri $Uri.AbsoluteUri -Headers $HiveHeaders -Body $body
 	#todo response processing
 	return $response
 }
@@ -251,7 +251,7 @@ function Set-HiveReceiver {
 	$body = ConvertTo-Json $nodes -Depth 6 -Compress
 	$body | out-string | Write-Verbose
 
-	$response = Invoke-WebRequest -UseBasicParsing -Method Put -Uri $Uri.AbsoluteUri -Headers $HiveHeaders -Body $body -Verbose
+	$response = Invoke-WebRequest -UseBasicParsing -Method Put -Uri $Uri.AbsoluteUri -Headers $HiveHeaders -Body $body
 	#todo response processing
 	return $response
 }
