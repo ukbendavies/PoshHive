@@ -209,14 +209,18 @@ function Set-HiveLight {
 		$newState = @{'targetValue' = $ColourMode.ToUpperInvariant()}
 		$nodes.nodes[0].attributes.Add('colourMode', $newState)
 
-		if ($ColourMode -eq 'COLOUR') {
-			$newState = @{'targetValue' = 0}
-			$nodes.nodes[0].attributes.Add('hsvHue', $newState)
-			Write-Verbose "Adding hsvHue value 0 as setting colour mode alone doesn't work"
-		} else {
-			$newState = @{'targetValue' = 2700}
-			$nodes.nodes[0].attributes.Add('colourTemperature', $newState)
-			Write-Verbose "Adding hsvHue value 0 as setting colour mode alone doesn't work"
+		# todo use switch
+		switch ($ColourMode) {
+			'COLOUR' {
+				$newState = @{'targetValue' = 0}
+				$nodes.nodes[0].attributes.Add('hsvHue', $newState)
+				Write-Verbose "Add hsvHue value 0 as setting colour mode alone doesn't work"
+			};
+			'TUNABLE'{
+				$newState = @{'targetValue' = 2700}
+				$nodes.nodes[0].attributes.Add('colourTemperature', $newState)
+				Write-Verbose "Add colourTemperature value 2700 as setting colour mode alone doesn't work"
+			}
 		}
 	} 
 
@@ -249,7 +253,7 @@ function Set-HiveReceiver {
 	}
 
 	$body = ConvertTo-Json $nodes -Depth 6 -Compress
-	$body | out-string | Write-Verbose
+	$body | Out-String | Write-Verbose
 
 	$response = Invoke-WebRequest -UseBasicParsing -Method Put -Uri $Uri.AbsoluteUri -Headers $HiveHeaders -Body $body
 	#todo response processing
