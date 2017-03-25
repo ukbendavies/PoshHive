@@ -24,6 +24,19 @@ $HiveHeaders = @{
 	'X-Omnia-Access-Token' = ''
 }
 
+<# todo figure out what these nodes do. there are also potentially as yet unknown classes?
+http://alertme.com/schema/json/node.class.synthetic.binary.control.device.uniform.scheduler.json#
+http://alertme.com/schema/json/node.class.synthetic.motion.duration.json#
+http://alertme.com/schema/json/node.class.synthetic.control.device.uniform.scheduler.json#
+#>
+$HiveNodeTypes = @{
+	'hub' = 'http://alertme.com/schema/json/node.class.hub.json#';
+	'thermostat' = 'http://alertme.com/schema/json/node.class.thermostat.json#';
+	'smartplug' = 'http://alertme.com/schema/json/node.class.smartplug.json#';
+	'thermostatui' = 'http://alertme.com/schema/json/node.class.thermostatui.json#';
+	'colourtunablelight' = 'http://alertme.com/schema/json/node.class.colour.tunable.light.json#'
+}
+
 # private functions
 function GetNodesDataStructure {
 	[CmdletBinding()] param ()
@@ -86,6 +99,32 @@ function Connect-HiveSession {
 	$HiveHeaders.'X-Omnia-Access-Token' = $mySession.sessionId
 }
 
+function Get-HiveNodeByType {
+	[CmdletBinding()] param (
+	[Parameter(Mandatory=$true, Position = 0)]
+		[ValidateSet('hub','thermostat','smartplug','thermostatui','colourtunablelight')]
+		[string] $NodeType,
+	[Parameter(Mandatory = $false, Position = 1)]
+		[switch] $Minimal
+	)
+	# resolve resource type schema identifier
+	$nodeResourceId = $HiveNodeTypes[$NodeType]
+	Write-Verbose "Resolved resource type schema identifier: $nodeResourceId"
+	
+	$response = $null
+	if ($Minimal) {
+		$response = Get-HiveNode -Filter id, nodeType
+	} else {
+		$response = Get-HiveNode
+	}
+
+	$filteredResources = $response |
+		Where-Object { $_.nodeType -ilike "*$nodeResourceId*" } |
+		Select-Object -Unique
+
+	return $filteredResources
+}
+
 function Get-HiveNode {
 	[CmdletBinding()] param (
 	[Parameter(Mandatory=$false, Position = 0)]
@@ -95,58 +134,51 @@ function Get-HiveNode {
 		[array] $Filter
 	)
 	$Uri = [uri]('' + $HiveUri + '/nodes')
+	# optional resource selection
 	if ($id -ne [guid]::Empty) {
 		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
 	}
+	# apply filter to resource selection
 	if ($PSBoundParameters.ContainsKey('Filter')) {
 		$Uri = [uri]($Uri.AbsoluteUri + '?fields=' + ($Filter -join ','))
 	}
+
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
 	return $response.nodes
 }
 
-# device specific helper functions
+# node specific helper functions
 function Get-HiveThermostat {
-	[CmdletBinding()] param ()
-	$thermostat = Get-HiveNode | Where-Object { $_.name -ilike '*Thermostat*' }
-	return $thermostat
+	[CmdletBinding()] param (
+	[Parameter(Mandatory = $false, Position = 0)]
+		[switch] $Minimal
+	)
+	return Get-HiveNodeByType -NodeType 'thermostatui' -Minimal:$Minimal
 }
 
 function Get-HiveReceiver {
-	[CmdletBinding()] param ()
-	$thermostats = Get-HiveNode | Where-Object { $_.name -ilike '*Receiver*' }
-	$activeThermostats = $thermostats | Where-Object {
-		$_.attributes.zone.reportedValue -eq 'HEATING'
-	}
-	return $activeThermostats
-}
-
-function Get-HiveTopology {
-	[CmdletBinding()] param ()
-	$Uri = [uri]('' + $HiveUri + '/topology')
-	
-	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
-	return $response.topology
-}
-
-function Get-HiveUser {
-	[CmdletBinding()] param ()
-	$Uri = [uri]('' + $HiveUri + '/users')
-	
-	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
-	return $response.users
+	[CmdletBinding()] param (
+	[Parameter(Mandatory = $false, Position = 0)]
+		[switch] $Minimal
+	)
+	# apparently the receiver is thermostat by schema
+	return Get-HiveNodeByType -NodeType 'thermostat' -Minimal:$Minimal
 }
 
 function Get-HiveHub {
-	[CmdletBinding()] param ()
-	$response = Get-HiveNode | Where-Object { $_.name -ilike '*Hub*' }
-	return $response
+	[CmdletBinding()] param (
+	[Parameter(Mandatory = $false, Position = 0)]
+		[switch] $Minimal
+	)
+	return Get-HiveNodeByType -NodeType 'hub' -Minimal:$Minimal
 }
 
 function Get-HiveLight {
-	[CmdletBinding()] param ()
-	$response = Get-HiveNode | Where-Object { $_.name -ilike '*Light*' }
-	return $response
+	[CmdletBinding()] param (
+	[Parameter(Mandatory = $false, Position = 0)]
+		[switch] $Minimal
+	)
+	return Get-HiveNodeByType -NodeType 'colourtunablelight' -Minimal:$Minimal
 }
 
 function Set-HiveLight {
@@ -217,18 +249,35 @@ function Set-HiveReceiver {
 	}
 
 	$body = ConvertTo-Json $nodes -Depth 6 -Compress
-	$body | out-string | Write-Host
+	$body | out-string | Write-Verbose
 
 	$response = Invoke-WebRequest -UseBasicParsing -Method Put -Uri $Uri.AbsoluteUri -Headers $HiveHeaders -Body $body -Verbose
 	#todo response processing
 	return $response
 }
 
+# general platform functions
 function Get-HiveEvents {
 	[CmdletBinding()] param ()
 	$Uri = [uri]('' + $HiveUri + '/events')
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
 	return $response.events
+}
+
+function Get-HiveTopology {
+	[CmdletBinding()] param ()
+	$Uri = [uri]('' + $HiveUri + '/topology')
+	
+	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
+	return $response.topology
+}
+
+function Get-HiveUser {
+	[CmdletBinding()] param ()
+	$Uri = [uri]('' + $HiveUri + '/users')
+	
+	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
+	return $response.users
 }
 
 # export public functions
