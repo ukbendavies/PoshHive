@@ -18,9 +18,13 @@ Open a PowerShell v3 command shell (v3 should be default on Windows 8.1++)
 Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavies/PoshHive.
 
    ```powershell
-    Import-Module <pathtomodule>\PoshHive.psm1
+    # firstly set up a little configuration
     $username='your hive username usually email address'
     $password='your hive password'
+    cd <pathtomodule>\Modules\PoshHive
+
+    # now lets get started
+    Import-Module .\PoshHive.psm1
     Connect-HiveSession -Username $username -Password $password
    ```
 
@@ -30,9 +34,10 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
     $receiver = Get-HiveReceiver
     Set-HiveReceiver -Id $receiver.id -TargetTemperature 21
    ```
-    Note: if you have more than one you might need to do a little more 
-    work ($receiver would be a set in this case) to get the id for the 
-    specific receiver that you want to manipulate.
+
+ Note: if you have more than one you might need to do a little more 
+ work ($receiver would be a set in this case) to get the id for the 
+ specific receiver that you want to manipulate.
 
 ### Set a Colour Light to on or off
 
