@@ -66,10 +66,10 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
     Set-HivePlug -Id $Plug.id -PowerState OFF
     Set-HivePlug -Id $Plug.id -PowerState ON
     
-    # Interestingly the samart-plug appears to report energy consumption data
+    # Interestingly the smart-plug appears to report energy consumption data
     $plug.attributes.powerConsumption
    ```
-   returns the following data where the values of reportedValue do change (unit appears to be in watts)
+   returns the following data where the values of reportedValue do change (units appear to be in watts)
    ```
   reportedValue                  displayValue            reportReceivedTime             reportChangedTime
   -------------                  ------------            ------------------             -----------------
