@@ -39,40 +39,6 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
  work ($receiver would be a set in this case) to get the id for the 
  specific receiver that you want to manipulate.
 
- Note that any Get-* will return an object containing lots of data and this allows access to hidden features.
- 
- ```powershell
- $receiver
- ```
- returns
-```
-id           : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-href         : https://api.prod.bgchprod.info:8443/omnia/nodes/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-links        :
-name         : Your Receiver
-nodeType     : http://alertme.com/schema/json/node.class.thermostat.json#
-parentNodeId : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-lastSeen     : 1490444982388
-createdOn    : 1441739428685
-userId       : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-ownerId      : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-attributes   : @{activeScheduleLock=; holidayModeActive=; supportsTransitionsPerDay=; optimumStartAdvanceTimeFactor=;
-               activeOverrides=; activeHeatCoolMode=; holidayModeEnabled=; temperatureSensorMissing=;
-               delayCompensationTime=; holidaySetPoint=; protocol=; supportsScheduleLock=; zone=; model=;
-               supportsHeatCoolModes=; presence=; errorIntegral=; heatingRateEstimate=; previousConfiguration=;
-               holidayMode=; previousWaterMode=; holidayEndDate=; holidayStartTime=; maxHeatTemperature=; nodeType=;
-               previousHeatMode=; lastSeen=; optimumStartMinimumTemperatureChange=; deviceClass=;
-               supportsScheduleDays=; softwareVersion=; optimumStartAdvanceTimeOffset=; swVersion=;
-               initialisationFailure=; manufacturer=; holidayStartDate=; deviceClassName=;
-               supportsScheduleLockDuration=; targetHeatTemperature=; hardwareFailure=; minHeatTemperature=;
-               temperature=; supportsTransitionsPerWeek=; manufactured=; controlMode=; capabilities=;
-               optimumStartEnabled=; LQI=; proportionalThreshold=; hwVersion=; supportsHotWater=; stateHeatingRelay=;
-               schedule=; holidayEndTime=; RSSI=; delayCompensatedTemperature=; previousHeatSetpoint=;
-               selfCalibrationFailure=; optimumStartMaximumAdvanceTime=; supportsTPI=; scheduleLockDuration=;
-               minimumOffCycles=}
-
- ```
-
 ### Set a Colour Light to on or off
 
    ```powershell
@@ -90,7 +56,6 @@ attributes   : @{activeScheduleLock=; holidayModeActive=; supportsTransitionsPer
     # you can also combine actions
     Set-HiveLight -Id $light.id -PowerState ON -ColourMode COLOUR
    ```
-
 
 ### Set a Colour Light to on or off
 
@@ -154,6 +119,42 @@ If in doubt you can always see all your nodes (devices) by executing:
    ```
 choose a node name that makes sense to you based on the names as shown in the 
 Hive App/WebUI.
+
+##### General note on nodes
+Any Get-* function will return an object containing lots of data and this allows access to hidden features (explore at your own risk!).
+
+Using the receiver as an example (this applies to any Node though):
+ ```powershell
+ $receiver
+ ```
+ returns
+```
+id           : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+href         : https://api.prod.bgchprod.info:8443/omnia/nodes/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+links        :
+name         : Your Receiver
+nodeType     : http://alertme.com/schema/json/node.class.thermostat.json#
+parentNodeId : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+lastSeen     : 1490444982388
+createdOn    : 1441739428685
+userId       : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+ownerId      : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+attributes   : @{activeScheduleLock=; holidayModeActive=; supportsTransitionsPerDay=; optimumStartAdvanceTimeFactor=;
+               activeOverrides=; activeHeatCoolMode=; holidayModeEnabled=; temperatureSensorMissing=;
+               delayCompensationTime=; holidaySetPoint=; protocol=; supportsScheduleLock=; zone=; model=;
+               supportsHeatCoolModes=; presence=; errorIntegral=; heatingRateEstimate=; previousConfiguration=;
+               holidayMode=; previousWaterMode=; holidayEndDate=; holidayStartTime=; maxHeatTemperature=; nodeType=;
+               previousHeatMode=; lastSeen=; optimumStartMinimumTemperatureChange=; deviceClass=;
+               supportsScheduleDays=; softwareVersion=; optimumStartAdvanceTimeOffset=; swVersion=;
+               initialisationFailure=; manufacturer=; holidayStartDate=; deviceClassName=;
+               supportsScheduleLockDuration=; targetHeatTemperature=; hardwareFailure=; minHeatTemperature=;
+               temperature=; supportsTransitionsPerWeek=; manufactured=; controlMode=; capabilities=;
+               optimumStartEnabled=; LQI=; proportionalThreshold=; hwVersion=; supportsHotWater=; stateHeatingRelay=;
+               schedule=; holidayEndTime=; RSSI=; delayCompensatedTemperature=; previousHeatSetpoint=;
+               selfCalibrationFailure=; optimumStartMaximumAdvanceTime=; supportsTPI=; scheduleLockDuration=;
+               minimumOffCycles=}
+
+ ```
 
 
 ## More complete list of functions
