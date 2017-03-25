@@ -108,7 +108,7 @@ function Get-HiveNodeByType {
 		[switch] $Minimal
 	)
 	# resolve resource type schema identifier
-	$nodeResourceId = $HiveNodeTypes[$NodeType]
+	$nodeResourceId = $HiveNodeTypes[$NodeType.TolowerInvariant()]
 	Write-Verbose "Resolved resource type schema identifier: $nodeResourceId"
 	
 	$response = $null
