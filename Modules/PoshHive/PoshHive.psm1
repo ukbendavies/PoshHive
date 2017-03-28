@@ -28,20 +28,20 @@ http://alertme.com/schema/json/node.class.synthetic.control.device.uniform.sched
 #>
 Set-Variable AlertMeSchemaUri $([uri]'http://alertme.com/schema/json') -Option constant
 Set-Variable HiveNodeTypes @{
-	'hub'				 = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.hub.json#';
-	'thermostat'		 = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostat.json#';
-	'smartplug'			 = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.smartplug.json#';
-	'thermostatui'		 = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostatui.json#';
-	'colourtunablelight' = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.colour.tunable.light.json#'
+    'hub'                = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.hub.json#';
+    'thermostat'         = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostat.json#';
+    'smartplug'          = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.smartplug.json#';
+    'thermostatui'       = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostatui.json#';
+    'colourtunablelight' = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.colour.tunable.light.json#'
 } -Option constant
 
 Set-Variable ClientIdentifier 'Hive Web Dashboard' -Option constant
 Set-Variable ContentType 'application/vnd.alertme.zoo-6.1+json' -Option constant
 $HiveHeaders = @{
-	'Content-Type'	 = $ContentType;
-	'Accept'		 = $ContentType;
-	'X-Omnia-Client' = $ClientIdentifier;
-	'X-Omnia-Access-Token' = ''
+    'Content-Type'   = $ContentType;
+    'Accept'         = $ContentType;
+    'X-Omnia-Client' = $ClientIdentifier;
+    'X-Omnia-Access-Token' = ''
 }
 
 # private functions
@@ -205,10 +205,10 @@ function Set-HiveLight {
 	[CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Low')] param (
 	[Parameter(Mandatory = $true, Position = 0)]
 		[guid] $Id,
-    [Parameter(Mandatory = $false, Position = 1)]
+	[Parameter(Mandatory = $false, Position = 1)]
 		[ValidateSet('ON', 'OFF')]
 		[string] $PowerState,
-    [Parameter(Mandatory = $false, Position = 2)]
+	[Parameter(Mandatory = $false, Position = 2)]
 		[ValidateSet('COLOUR', 'TUNABLE')]
 		[string] $ColourMode
 	)
@@ -288,7 +288,7 @@ function Set-HivePlug {
 	[CmdletBinding()] param (
 	[Parameter(Mandatory = $true, Position = 0)]
 		[guid] $Id,
-    [Parameter(Mandatory = $true, Position = 1)]
+	[Parameter(Mandatory = $true, Position = 1)]
 		[ValidateSet('ON', 'OFF')]
 		[string] $PowerState
 	)
