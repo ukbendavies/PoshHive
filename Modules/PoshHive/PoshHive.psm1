@@ -304,7 +304,7 @@ function Set-HivePlug {
 }
 
 # general platform functions
-function Get-HiveEvents {
+function Get-HiveEvent {
 	<#
 	.SYNOPSIS
 		Retrieves the latest set of events that have occured on the Hive Api surface.
