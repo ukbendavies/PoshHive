@@ -8,12 +8,12 @@ Copyright 2017 Ben Davies
 MIT License. Full license: https://github.com/ukbendavies/PoshHive/blob/master/LICENSE
 
 ## Disclaimer
-- I do not work with, for and am not in any way associated with British Gas or any organisation that creates or maintains HIVE. 
-- This work is purely my own experiment after I originally asked for a supported HIVE RestAPI on the British Gas requests forum.
+- I do not work for and am not in any way associated with British Gas or any organisation that creates or maintains HIVE. 
+- This work is purely my own experiment after I originally asked for a supported HIVE RestAPI on the British Gas forum.
 
 ## Getting Started
-Open a PowerShell v3 command shell (v3 should be default on Windows 8.1++)
- 
+Open a PowerShell v3+ command shell (v3 or higher should be default on Windows 8.1++ and is required for the json support)
+
 ### Establish an authenticated session to your HiveHome account
 Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavies/PoshHive.
 
