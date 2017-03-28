@@ -175,6 +175,7 @@ CommandType | Name
    Function | Get-HiveTopology
    Function | Get-HiveUser
    Function | Get-HiveHub
+   Function | Get-HiveWeather
    Function | Set-HiveLight
    Function | Set-HiveReceiver
    Function | Set-HivePlug
