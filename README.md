@@ -82,13 +82,13 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
 
 ## Debugging
 
-##### Using Get-HiveEvents
+##### Using Get-HiveEvent
 This is one of the most useful features so far. You can get the events
 for all of the Hive actions submitted to the platform. This is useful for example
 to get the last 5 events and see what the Hive App/WebUI actually did.
 
    ```powershell
-    Get-HiveEvents | Select -First 5
+    Get-HiveEvent | Select -First 5
    ```
    returns something like this:
    
@@ -166,7 +166,7 @@ attributes   : @{activeScheduleLock=; holidayModeActive=; supportsTransitionsPer
    --- | ---
    Connect-HiveSession | `[-Username] <string> [-Password] <string> [<CommonParameters>]`
    Disconnect-HiveSession | `[<CommonParameters>]`
-   Get-HiveEvents | `[<CommonParameters>]`
+   Get-HiveEvent | `[<CommonParameters>]`
    Get-HiveHub | `[-Minimal] [<CommonParameters>]`
    Get-HiveLight | `[-Minimal] [<CommonParameters>]`
    Get-HiveNode | `[[-Id] <guid>] [[-Filter] <array>] [<CommonParameters>]`
