@@ -202,7 +202,7 @@ function Get-HiveLight {
 }
 
 function Set-HiveLight {
-	[CmdletBinding()] param (
+	[CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Low')] param (
 	[Parameter(Mandatory = $true, Position = 0)]
 		[guid] $Id,
     [Parameter(Mandatory = $false, Position = 1)]
@@ -221,8 +221,13 @@ function Set-HiveLight {
 	$nodes = GetNodesDataStructure
 
 	if ($PSBoundParameters.ContainsKey('PowerState')) {
-		$newState = @{'targetValue' = $PowerState.ToUpperInvariant()}
-		$nodes.nodes[0].attributes.Add('state', $newState)
+		if ($pscmdlet.ShouldProcess($PowerState)) {
+			$newState = @{'targetValue' = $PowerState.ToUpperInvariant()}
+			$nodes.nodes[0].attributes.Add('state', $newState)
+		} else {
+			Write-Verbose "User abprted confirm action."
+			return
+		}
 	}
 
 	if ($PSBoundParameters.ContainsKey('ColourMode')) {
