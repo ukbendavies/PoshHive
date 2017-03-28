@@ -70,12 +70,13 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
     $plug.attributes.powerConsumption
    ```
    returns the following data where the values of reportedValue do change (units appear to be in watts)
+   ```yaml
+    reportedValue      : 2.0
+    displayValue       : 2.0
+    reportReceivedTime : 1490444534755
+    reportChangedTime  : 1490444534755
    ```
-  reportedValue                  displayValue            reportReceivedTime             reportChangedTime
-  -------------                  ------------            ------------------             -----------------
-        2.0                           2.0                 1490444534755                 1490444534755
-   ```
-   - my kettle has a reportedValue of 2904.0 (about right).
+   - my kettle has a reportedValue of 2904 watts (about right).
    - one of the many hidden features that seem to be present in the hardaware platform but not yet released 
      in the HIVE software (App/WebUI).
 
@@ -91,7 +92,7 @@ to get the last 5 events and see what the Hive App/WebUI actually did.
    ```
    returns something like this:
    
-   ```
+   ```yaml
     id         : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     href       : https://api.prod.bgchprod.info:8443/omnia/events/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     links      :
@@ -130,7 +131,7 @@ Using the receiver as an example (this applies to any Node though):
  $receiver
  ```
  returns
-```
+```yaml
 id           : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 href         : https://api.prod.bgchprod.info:8443/omnia/nodes/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 links        :
