@@ -17,26 +17,31 @@ Acknowledgements
 Set-StrictMode -Version Latest
 Set-PsDebug -Strict
 
-# const
-$HiveUri = [uri]'https://api-prod.bgchprod.info/omnia'
-$HiveHeaders = @{
-	'Content-Type' = 'application/vnd.alertme.zoo-6.1+json';
-	'Accept' = 'application/vnd.alertme.zoo-6.1+json';
-	'X-Omnia-Client' = 'Hive Web Dashboard';
-	'X-Omnia-Access-Token' = ''
-}
+# constants
+Set-Variable HiveUri $([uri]'https://api-prod.bgchprod.info/omnia') -Option constant
+Set-Variable HiveWeatherUri $([uri]'https://weather-prod.bgchprod.info') -Option constant
 
 <# todo figure out what these nodes do. there are also potentially as yet unknown classes?
 http://alertme.com/schema/json/node.class.synthetic.binary.control.device.uniform.scheduler.json#
 http://alertme.com/schema/json/node.class.synthetic.motion.duration.json#
 http://alertme.com/schema/json/node.class.synthetic.control.device.uniform.scheduler.json#
 #>
-$HiveNodeTypes = @{
-	'hub' = 'http://alertme.com/schema/json/node.class.hub.json#';
-	'thermostat' = 'http://alertme.com/schema/json/node.class.thermostat.json#';
-	'smartplug' = 'http://alertme.com/schema/json/node.class.smartplug.json#';
-	'thermostatui' = 'http://alertme.com/schema/json/node.class.thermostatui.json#';
-	'colourtunablelight' = 'http://alertme.com/schema/json/node.class.colour.tunable.light.json#'
+Set-Variable AlertMeSchemaUri $([uri]'http://alertme.com/schema/json') -Option constant
+Set-Variable HiveNodeTypes @{
+	'hub'				 = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.hub.json#';
+	'thermostat'		 = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostat.json#';
+	'smartplug'			 = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.smartplug.json#';
+	'thermostatui'		 = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostatui.json#';
+	'colourtunablelight' = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.colour.tunable.light.json#'
+} -Option constant
+
+Set-Variable ClientIdentifier 'Hive Web Dashboard' -Option constant
+Set-Variable ContentType 'application/vnd.alertme.zoo-6.1+json' -Option constant
+$HiveHeaders = @{
+	'Content-Type'	 = $ContentType;
+	'Accept'		 = $ContentType;
+	'X-Omnia-Client' = $ClientIdentifier;
+	'X-Omnia-Access-Token' = ''
 }
 
 # private functions
@@ -104,7 +109,7 @@ function Connect-HiveSession {
 function Get-HiveNodeByType {
 	[CmdletBinding()] param (
 	[Parameter(Mandatory=$true, Position = 0)]
-		[ValidateSet('hub','thermostat','smartplug','thermostatui','colourtunablelight')]
+		[ValidateSet('hub', 'thermostat', 'smartplug', 'thermostatui', 'colourtunablelight')]
 		[string] $NodeType,
 	[Parameter(Mandatory = $false, Position = 1)]
 		[switch] $Minimal
@@ -119,12 +124,12 @@ function Get-HiveNodeByType {
 	} else {
 		$response = Get-HiveNode
 	}
-
-	$filteredResources = $response |
+	
+	$filteredNodes = $response |
 		Where-Object { $_.nodeType -ilike "*$nodeResourceId*" } |
 		Select-Object -Unique
-
-	return $filteredResources
+	
+	return $filteredNodes
 }
 
 function Get-HiveNode {
@@ -298,9 +303,16 @@ function Set-HivePlug {
 	return $response
 }
 
-
 # general platform functions
 function Get-HiveEvents {
+	<#
+	.SYNOPSIS
+		Retrieves the latest set of events that have occured on the Hive Api surface.
+	.DESCRIPTION
+		Uses the Hive Events Api to get the latest set of events that have occured in your Hive system.
+	.OUTPUTS
+		Events that have occured in your Hive Home.
+	#>
 	[CmdletBinding()] param ()
 	$Uri = [uri]('' + $HiveUri + '/events')
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
@@ -308,6 +320,14 @@ function Get-HiveEvents {
 }
 
 function Get-HiveTopology {
+	<#
+	.SYNOPSIS
+		Retrieves current representatin of your Hive Topology.
+	.DESCRIPTION
+		Uses the Hive Toplology Api to get a logical represenation of the zigbee network.
+	.OUTPUTS
+		Topological representation of your Hive Home.
+	#>
 	[CmdletBinding()] param ()
 	$Uri = [uri]('' + $HiveUri + '/topology')
 	
@@ -316,11 +336,50 @@ function Get-HiveTopology {
 }
 
 function Get-HiveUser {
+	<#
+	.SYNOPSIS
+		Retrieves information about the logged in Hive user.
+	.DESCRIPTION
+		Uses the login session to retrieve information about the current user.
+	.OUTPUTS
+		Current logged in user data.
+	#>
 	[CmdletBinding()] param ()
 	$Uri = [uri]('' + $HiveUri + '/users')
 	
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
 	return $response.users
+}
+
+function Get-HiveWeather {
+	<#
+	.SYNOPSIS
+		Provides basic temperature reading from the Hive Weather API
+	.DESCRIPTION
+		Uses a PostCode to retrieve current outside temperature. 
+		By default the users postcode is used in the query, this can 
+		be overriden using the PostCode parameter.
+	.OUTPUTS
+		Current weather data retrieved from Hive.
+	#>
+	[CmdletBinding()] param (
+	[Parameter(Mandatory=$false, Position = 0)]
+		[ValidateNotNullOrEmpty()]
+		# PostCode used in Weather query.
+		# By default the current user postcode is used.
+		[string] $PostCode
+	)
+	$Uri = [uri]('' + $HiveWeatherUri + '/weather')
+	
+	if ($PSBoundParameters.ContainsKey('PostCode')) {
+		$query = '?postcode=' + $PostCode
+	} else {
+		$user = Get-HiveUser
+		$query = '?postcode=' + $user.postcode
+	}
+	$Uri = [uri]($Uri.AbsoluteUri + $query)
+	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
+	return $response.weather
 }
 
 # export public functions
