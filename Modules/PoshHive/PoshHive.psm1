@@ -72,16 +72,14 @@ function Disconnect-HiveSession {
 function Connect-HiveSession {
 	[CmdletBinding()] param (
 	[Parameter(Mandatory = $true, Position = 0)]
-		[string] $Username,
-	[Parameter(Mandatory = $true, Position = 1)]
-		[string] $Password 
+		[PSCredential] [System.Management.Automation.Credential()] $Credential
 	)
 	$Uri = [uri]('' + $HiveUri + '/auth/sessions')
 
 	# create hive login data-structure
 	$session = @{
-		'username' = $UserName;
-		'password' = $Password;
+		'username' = $credential.UserName;
+		'password' = $credential.GetNetworkCredential().Password;
 		'caller' = 'WEB'
 	}
 

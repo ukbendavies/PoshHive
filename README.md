@@ -19,14 +19,15 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
 
    ```powershell
     # firstly set up a little configuration
-    $username='your hive username usually email address'
-    $password='your hive password'
     cd <pathtomodule>\Modules\PoshHive
 
     # now lets get started
     Import-Module .\PoshHive.psm1
-    Connect-HiveSession -Username $username -Password $password
+    Connect-HiveSession -Credential 'your hive username usually email address'
    ```
+
+  - password process makes use of standard powershell Get-Credential mechanism.
+  - passwords are securestring and then wrapped in https transport direct to HIVE API.
 
 ### Setting the temperature
 
@@ -63,8 +64,8 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
     $plug = Get-HivePlug
     
     # basic ON or OFF functions
-    Set-HivePlug -Id $Plug.id -PowerState OFF
-    Set-HivePlug -Id $Plug.id -PowerState ON
+    Set-HivePlug -Id $plug.id -PowerState OFF
+    Set-HivePlug -Id $plug.id -PowerState ON
     
     # Interestingly the smart-plug appears to report energy consumption data
     $plug.attributes.powerConsumption
@@ -164,7 +165,7 @@ attributes   : @{activeScheduleLock=; holidayModeActive=; supportsTransitionsPer
 
    Name | Syntax
    --- | ---
-   Connect-HiveSession | `[-Username] <string> [-Password] <string> [<CommonParameters>]`
+   Connect-HiveSession | `[-Credential] <pscredential> [<CommonParameters>]`
    Disconnect-HiveSession | `[<CommonParameters>]`
    Get-HiveEvent | `[<CommonParameters>]`
    Get-HiveHub | `[-Minimal] [<CommonParameters>]`
