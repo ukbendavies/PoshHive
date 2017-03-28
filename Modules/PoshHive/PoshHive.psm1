@@ -102,8 +102,13 @@ function Connect-HiveSession {
 		throw 'No valid session'
 	}
 
-	Write-Host "Logged in as $($mySession.username) [id:$($mySession.sessionId), newestApiV:$($mySession.latestSupportedApiVersion)]"
+	$sessionInfo = @(
+		"LatestApiVersion : $($mySession.latestSupportedApiVersion)",
+		"SessionId : $($mySession.sessionId)",
+		"LoggedInAs : $($mySession.username)"
+	)
 	$HiveHeaders.'X-Omnia-Access-Token' = $mySession.sessionId
+	Write-Output $sessionInfo
 }
 
 function Get-HiveNodeByType {
