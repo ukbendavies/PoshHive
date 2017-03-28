@@ -161,24 +161,24 @@ attributes   : @{activeScheduleLock=; holidayModeActive=; supportsTransitionsPer
 
 ## More complete list of functions
 
-CommandType | Name
---- | --- 
-   Function | Connect-HiveSession
-   Function | Disconnect-HiveSession
-   Function | Get-HiveEvents
-   Function | Get-HiveLight
-   Function | Get-HivePlug
-   Function | Get-HiveNode
-   Function | Get-HiveNodeByType
-   Function | Get-HiveReceiver
-   Function | Get-HiveThermostat
-   Function | Get-HiveTopology
-   Function | Get-HiveUser
-   Function | Get-HiveHub
-   Function | Get-HiveWeather
-   Function | Set-HiveLight
-   Function | Set-HiveReceiver
-   Function | Set-HivePlug
+   Name | Syntax
+   --- | ---
+   Connect-HiveSession | `[-Username] <string> [-Password] <string> [<CommonParameters>]`
+    Disconnect-HiveSession | `[<CommonParameters>]`
+    Get-HiveEvents | `[<CommonParameters>]`
+    Get-HiveHub | `[-Minimal] [<CommonParameters>]`
+    Get-HiveLight | `[-Minimal] [<CommonParameters>]`
+    Get-HiveNode | `[[-Id] <guid>] [[-Filter] <array>] [<CommonParameters>]`
+    Get-HiveNodeByType | `[-NodeType] <string> [-Minimal] [<CommonParameters>]`
+    Get-HivePlug | `[-Minimal] [<CommonParameters>]`
+    Get-HiveReceiver | `[-Minimal] [<CommonParameters>]`
+    Get-HiveThermostat | `[-Minimal] [<CommonParameters>]`
+    Get-HiveTopology | `[<CommonParameters>]`
+    Get-HiveUser | `[<CommonParameters>]`
+    Get-HiveWeather | `[[-PostCode] <string>] [<CommonParameters>]`
+    Set-HiveLight | `[-Id] <guid> [[-PowerState] <string>] [[-ColourMode] <string>] [<CommonParameters>]`
+    Set-HivePlug | `[-Id] <guid> [-PowerState] <string> [<CommonParameters>]`
+    Set-HiveReceiver | `[-Id] <guid> [-TargetTemperature] <uint16> [<CommonParameters>]`
 
 ## Coming soon
 - Further abstraction, this was my very first attempt so its not as abstracted as I'd like
