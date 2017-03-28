@@ -46,7 +46,7 @@ $HiveHeaders = @{
 
 # private functions
 function GetNodesDataStructure {
-	[CmdletBinding()] param ()
+	[CmdletBinding()] [OutputType([System.Collections.Hashtable])] param ()
 	# base data-structure for node-attribute representation
 	$nodes = @{
 		'nodes' = @(
