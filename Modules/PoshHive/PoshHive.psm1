@@ -98,7 +98,7 @@ function Connect-HiveSession {
 
 	# store the first session access token for downstream calls
 	$mySession = $response.sessions[0]
-	if ($mySession -eq $null -or $mySession -eq '') {
+	if ($null -eq $mySession -or $mySession -eq '') {
 		throw 'No valid session'
 	}
 
