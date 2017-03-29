@@ -7,12 +7,21 @@
     Requires PSScriptAnalyzer - static code analysis
 	Requires platyPS - generate automated powershell help
 #>
+[CmdletBinding()] param ()
 Set-StrictMode -Version Latest
 Set-PsDebug -Strict
 
 $base = Resolve-Path "$PSScriptRoot\.."
 $modules = Resolve-Path "$base\Modules"
 $helpDir = Join-Path $base Help
+# log directory should not be uploaded to source control
+$logDir = Join-Path $base Log
+if (Test-Path $logDir) {
+	# remove any artifacts from previous build
+	rmdir $logDir\*.* -Force
+} else {
+	mkdir $logDir
+}
 
 Write-Verbose 'execting static code analysis'
 Import-Module PSScriptAnalyzer
@@ -23,11 +32,23 @@ if (@($analysis | ?{$_.Severity -eq 'Error'}).length -gt 0) {
 } else {
 	Write-Output $analysis
 }
+
+# generate markdown function help
 Write-Verbose 'building powershell help'
 Import-Module $modules\PoshHive -Force
 if (Test-Path $helpDir) {
 	rm $helpDir\*.* -Force
 }
 New-MarkdownHelp -Module poshhive -Force -OutputFolder $helpDir
+
+# generate markdown function toc, syntax and links to generated help
+Write-Verbose 'building powershell help toc for readme'
+$helpTable = $(
+	Get-Command -Module PoshHive | 
+		%{
+			"[$($_.Name)](Help/$($_.Name).md) | ``$($(Get-Command $($_.Name) -Syntax).Replace($_.Name, '').Trim())``"
+		}
+	)
+$helpTable | Out-File $logDir\FunctionToc.md -Encoding UTF8 -force
 
 Write-Output 'build completed without errors'
