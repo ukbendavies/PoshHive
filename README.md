@@ -40,6 +40,19 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
  work ($receiver would be a set in this case) to get the id for the 
  specific receiver that you want to manipulate.
 
+ Alternatively you can use the PowerShell pipeline for any get/set combination:
+   
+   ```powershell
+    Get-HiveReceiver -Minimal | Set-HiveReceiver -TargetTemperature 21
+   ```
+
+It is advisable to use the -Minimal switch that minimises the amount 
+of data that is sent and received round-trip to the server ny using Filters and this 
+improves execution speed. As a rule if you are scripting then prefer the -Minimal 
+switch that simply gets the Id and Name of the resource. Avoid the pipeline strategy 
+if you are performing several update actions on the same resource that don't require 
+round-trip state validation.
+
 ### Set a Colour Light to on or off
 
    ```powershell
