@@ -26,7 +26,7 @@ if (@($analysis | ?{$_.Severity -eq 'Error'}).length -gt 0) {
 Write-Verbose 'building powershell help'
 Import-Module $modules\PoshHive -Force
 if (Test-Path $helpDir) {
-	rm $helpDir\*.* -force
+	rm $helpDir\*.* -Force
 }
 New-MarkdownHelp -Module poshhive -Force -OutputFolder $helpDir
 

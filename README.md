@@ -165,22 +165,22 @@ attributes   : @{activeScheduleLock=; holidayModeActive=; supportsTransitionsPer
 
    Name | Syntax
    --- | ---
-   Connect-HiveSession | `[-Credential] <pscredential> [<CommonParameters>]`
-   Disconnect-HiveSession | `[<CommonParameters>]`
-   Get-HiveEvent | `[<CommonParameters>]`
-   Get-HiveHub | `[-Minimal] [<CommonParameters>]`
-   Get-HiveLight | `[-Minimal] [<CommonParameters>]`
-   Get-HiveNode | `[[-Id] <guid>] [[-Filter] <array>] [<CommonParameters>]`
-   Get-HiveNodeByType | `[-NodeType] <string> [-Minimal] [<CommonParameters>]`
-   Get-HivePlug | `[-Minimal] [<CommonParameters>]`
-   Get-HiveReceiver | `[-Minimal] [<CommonParameters>]`
-   Get-HiveThermostat | `[-Minimal] [<CommonParameters>]`
-   Get-HiveTopology | `[<CommonParameters>]`
-   Get-HiveUser | `[<CommonParameters>]`
-   Get-HiveWeather | `[[-PostCode] <string>] [<CommonParameters>]`
-   Set-HiveLight | `[-Id] <guid> [[-PowerState] <string>] [[-ColourMode] <string>] [<CommonParameters>]`
-   Set-HivePlug | `[-Id] <guid> [-PowerState] <string> [<CommonParameters>]`
-   Set-HiveReceiver | `[-Id] <guid> [-TargetTemperature] <uint16> [<CommonParameters>]`
+	[Connect-HiveSession](Help/Connect-HiveSession.md) | `[-Credential] <pscredential> [<CommonParameters>]`
+	[Disconnect-HiveSession](Help/Disconnect-HiveSession.md) | `[<CommonParameters>]`
+	[Get-HiveEvent](Help/Get-HiveEvent.md) | `[<CommonParameters>]`
+	[Get-HiveHub](Help/Get-HiveHub.md) | `[-Minimal] [<CommonParameters>]`
+	[Get-HiveLight](Help/Get-HiveLight.md) | `[-Minimal] [<CommonParameters>]`
+	[Get-HiveNode](Help/Get-HiveNode.md) | `[[-Id] <guid>] [[-Filter] <array>] [<CommonParameters>]`
+	[Get-HiveNodeByType](Help/Get-HiveNodeByType.md) | `[-NodeType] <string> [-Minimal] [<CommonParameters>]`
+	[Get-HivePlug](Help/Get-HivePlug.md) | `[-Minimal] [<CommonParameters>]`
+	[Get-HiveReceiver](Help/Get-HiveReceiver.md) | `[-Minimal] [<CommonParameters>]`
+	[Get-HiveThermostat](Help/Get-HiveThermostat.md) | `[-Minimal] [<CommonParameters>]`
+	[Get-HiveTopology](Help/Get-HiveTopology.md) | `[<CommonParameters>]`
+	[Get-HiveUser](Help/Get-HiveUser.md) | `[<CommonParameters>]`
+	[Get-HiveWeather](Help/Get-HiveWeather.md) | `[[-PostCode] <string>] [<CommonParameters>]`
+	[Set-HiveLight](Help/Set-HiveLight.md) | `[-Id] <guid> [[-PowerState] <string>] [[-ColourMode] <string>] [-WhatIf] [-Confirm] [<CommonParameters>]`
+	[Set-HivePlug](Help/Set-HivePlug.md) | `[-Id] <guid> [-PowerState] <string> [<CommonParameters>]`
+	[Set-HiveReceiver](Help/Set-HiveReceiver.md) | `[-Id] <guid> [-TargetTemperature] <uint16> [<CommonParameters>]`
 
 ## Coming soon
 - Further abstraction, this was my very first attempt so its not as abstracted as I'd like
