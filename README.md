@@ -163,7 +163,7 @@ attributes   : @{activeScheduleLock=; holidayModeActive=; supportsTransitionsPer
 
 ## More complete list of functions
 
-Name | Syntax
+Function | Syntax
 --- | ---
 [Connect-HiveSession](Help/Connect-HiveSession.md) | `[-Credential] <pscredential> [<CommonParameters>]`
 [Disconnect-HiveSession](Help/Disconnect-HiveSession.md) | `[<CommonParameters>]`
