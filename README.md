@@ -161,7 +161,7 @@ attributes   : @{activeScheduleLock=; holidayModeActive=; supportsTransitionsPer
  ```
 
 
-## More complete list of functions
+## Complete list of functions
 
 Function | Syntax
 --- | ---
