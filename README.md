@@ -179,8 +179,8 @@ Function | Syntax
 [Get-HiveUser](Help/Get-HiveUser.md) | `[<CommonParameters>]`
 [Get-HiveWeather](Help/Get-HiveWeather.md) | `[[-PostCode] <string>] [<CommonParameters>]`
 [Set-HiveLight](Help/Set-HiveLight.md) | `[-Id] <guid> [[-PowerState] <string>] [[-ColourMode] <string>] [-WhatIf] [-Confirm] [<CommonParameters>]`
-[Set-HivePlug](Help/Set-HivePlug.md) | `[-Id] <guid> [-PowerState] <string> [<CommonParameters>]`
-[Set-HiveReceiver](./Help/Set-HiveReceiver.md) | `[-Id] <guid> [-TargetTemperature] <uint16> [<CommonParameters>]`
+[Set-HivePlug](Help/Set-HivePlug.md) | `[-Id] <guid> [-PowerState] <string> [-WhatIf] [-Confirm] [<CommonParameters>]`
+[Set-HiveReceiver](Help/Set-HiveReceiver.md) | `[-Id] <guid> [-TargetTemperature] <uint16> [-WhatIf] [-Confirm] [<CommonParameters>]`
 
 ## Coming soon
 - Further abstraction, this was my very first attempt so its not as abstracted as I'd like
