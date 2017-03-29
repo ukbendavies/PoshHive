@@ -47,7 +47,7 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
    ```
 
 It is advisable to use the -Minimal switch that minimises the amount 
-of data that is sent and received round-trip to the server by using Filters and this 
+of data that is sent and received round-trip to the server by using Filters as this 
 improves execution speed. As a rule if you are scripting then prefer the -Minimal 
 switch that simply gets the Id and Name of the resource. Avoid the pipeline strategy 
 if you are performing several update actions on the same resource that don't require 
