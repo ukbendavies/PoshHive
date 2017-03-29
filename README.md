@@ -187,8 +187,8 @@ Function | Syntax
 - Enhancement to ColourLight to set various colour parameters and brightness.
 - Additional controls over the receiver.
 - Various other enhancements.
-- Documentation on the public functions.
-- Tests
+- Documentation on the public functions [in progress] [doc generators - complete].
+- Tests [static code analysis - complete] [pester tests - not started]
 - Bug fixes.
 
 ## Acknowledgements
