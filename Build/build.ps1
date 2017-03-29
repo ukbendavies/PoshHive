@@ -42,6 +42,9 @@ if (Test-Path $helpDir) {
 New-MarkdownHelp -Module poshhive -Force -OutputFolder $helpDir
 
 # generate markdown function toc, syntax and links to generated help
+# Note: at this time you need to manually copy the results from $logDir\FunctionToc.md into the readme
+# I did consider generating this in-place however I felt the likeliness of splatting something in the readme
+# by mistake outweighed the value as the readme is largely a manual document process.
 Write-Verbose 'building powershell help toc for readme'
 $helpTable = $(
 	Get-Command -Module PoshHive | 
