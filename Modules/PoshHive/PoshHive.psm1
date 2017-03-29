@@ -315,11 +315,11 @@ function Set-HivePlug {
 function Get-HiveEvent {
 	<#
 	.SYNOPSIS
-		Retrieves the latest set of events that have occured on the Hive Api surface.
+		Retrieves the latest set of events that have occurred on the Hive Api surface.
 	.DESCRIPTION
-		Uses the Hive Events Api to get the latest set of events that have occured in your Hive system.
+		Uses the Hive Events Api to get the latest set of events that have occurred in your Hive system.
 	.OUTPUTS
-		Events that have occured in your Hive Home.
+		Events that have occurred in your Hive Home.
 	#>
 	[CmdletBinding()] param ()
 	$Uri = [uri]('' + $HiveUri + '/events')
@@ -330,9 +330,9 @@ function Get-HiveEvent {
 function Get-HiveTopology {
 	<#
 	.SYNOPSIS
-		Retrieves current representatin of your Hive Topology.
+		Retrieves current representation of your Hive Topology.
 	.DESCRIPTION
-		Uses the Hive Toplology Api to get a logical represenation of the zigbee network.
+		Uses the Hive Topology Api to get a logical representation of the zigbee network.
 	.OUTPUTS
 		Topological representation of your Hive Home.
 	#>
@@ -366,7 +366,7 @@ function Get-HiveWeather {
 	.DESCRIPTION
 		Uses a PostCode to retrieve current outside temperature. 
 		By default the users postcode is used in the query, this can 
-		be overriden using the PostCode parameter.
+		be overridden using the PostCode parameter.
 	.OUTPUTS
 		Current weather data retrieved from Hive.
 	#>

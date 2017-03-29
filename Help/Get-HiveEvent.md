@@ -7,7 +7,7 @@ schema: 2.0.0
 # Get-HiveEvent
 
 ## SYNOPSIS
-Retrieves the latest set of events that have occured on the Hive Api surface.
+Retrieves the latest set of events that have occurred on the Hive Api surface.
 
 ## SYNTAX
 
@@ -16,7 +16,7 @@ Get-HiveEvent
 ```
 
 ## DESCRIPTION
-Uses the Hive Events Api to get the latest set of events that have occured in your Hive system.
+Uses the Hive Events Api to get the latest set of events that have occurred in your Hive system.
 
 ## EXAMPLES
 
@@ -33,7 +33,7 @@ PS C:\> {{ Add example code here }}
 
 ## OUTPUTS
 
-### Events that have occured in your Hive Home.
+### Events that have occurred in your Hive Home.
 
 ## NOTES
 

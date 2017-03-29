@@ -7,7 +7,7 @@ schema: 2.0.0
 # Get-HiveTopology
 
 ## SYNOPSIS
-Retrieves current representatin of your Hive Topology.
+Retrieves current representation of your Hive Topology.
 
 ## SYNTAX
 
@@ -16,7 +16,7 @@ Get-HiveTopology
 ```
 
 ## DESCRIPTION
-Uses the Hive Toplology Api to get a logical represenation of the zigbee network.
+Uses the Hive Topology Api to get a logical representation of the zigbee network.
 
 ## EXAMPLES
 

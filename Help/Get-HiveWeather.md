@@ -18,7 +18,7 @@ Get-HiveWeather [[-PostCode] <String>]
 ## DESCRIPTION
 Uses a PostCode to retrieve current outside temperature. 
 By default the users postcode is used in the query, this can 
-be overriden using the PostCode parameter.
+be overridden using the PostCode parameter.
 
 ## EXAMPLES
 
