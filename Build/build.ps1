@@ -52,6 +52,6 @@ $helpTable = $(
 			"[$($_.Name)](Help/$($_.Name).md) | ``$($(Get-Command $($_.Name) -Syntax).Replace($_.Name, '').Trim())``"
 		}
 	)
-$helpTable | Out-File $logDir\FunctionToc.md -Encoding UTF8 -force
+$helpTable | Out-File $logDir\FunctionToc.md -Encoding UTF8 -Force
 
 Write-Output 'build completed without errors'
