@@ -201,7 +201,8 @@ function Get-HiveLight {
 
 function Set-HiveLight {
 	[CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Low')] param (
-	[Parameter(Mandatory = $true, Position = 0)]
+	[Parameter(Mandatory = $true, Position = 0,
+		ValueFromPipelineByPropertyName = $true)]
 		[guid] $Id,
 	[Parameter(Mandatory = $false, Position = 1)]
 		[ValidateSet('ON', 'OFF')]
@@ -255,8 +256,9 @@ function Set-HiveLight {
 }
 
 function Set-HiveReceiver {
-	[CmdletBinding()] param (
-	[Parameter(Mandatory = $true, Position = 0)]
+	[CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Low')] param (
+	[Parameter(Mandatory = $true, Position = 0,
+		ValueFromPipelineByPropertyName = $true)]
 		[guid] $Id,
 	[Parameter(Mandatory = $true, Position = 1)]
 		[uint16] $TargetTemperature 
@@ -270,8 +272,13 @@ function Set-HiveReceiver {
 	$nodes = GetNodesDataStructure
 
 	if ($PSBoundParameters.ContainsKey('TargetTemperature')) {
-		$newState = @{'targetValue' = $TargetTemperature}
-		$nodes.nodes[0].attributes.Add('targetHeatTemperature', $newState)
+		if ($pscmdlet.ShouldProcess($TargetTemperature)) {
+			$newState = @{'targetValue' = $TargetTemperature}
+			$nodes.nodes[0].attributes.Add('targetHeatTemperature', $newState)
+		} else {
+			Write-Verbose "User abprted confirm action."
+			return
+		}
 	}
 
 	$body = ConvertTo-Json $nodes -Depth 6 -Compress
@@ -283,8 +290,9 @@ function Set-HiveReceiver {
 }
 
 function Set-HivePlug {
-	[CmdletBinding()] param (
-	[Parameter(Mandatory = $true, Position = 0)]
+	[CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Low')] param (
+	[Parameter(Mandatory = $true, Position = 0,
+		ValueFromPipelineByPropertyName = $true)]
 		[guid] $Id,
 	[Parameter(Mandatory = $true, Position = 1)]
 		[ValidateSet('ON', 'OFF')]
@@ -297,10 +305,15 @@ function Set-HivePlug {
 	
 	# hive nodes data-structure
 	$nodes = GetNodesDataStructure
-
+	
 	if ($PSBoundParameters.ContainsKey('PowerState')) {
-		$newState = @{'targetValue' = $PowerState.ToUpperInvariant()}
-		$nodes.nodes[0].attributes.Add('state', $newState)
+		if ($pscmdlet.ShouldProcess($PowerState)) {
+			$newState = @{'targetValue' = $PowerState.ToUpperInvariant()}
+			$nodes.nodes[0].attributes.Add('state', $newState)
+		} else {
+			Write-Verbose "User abprted confirm action."
+			return
+		}
 	}
 
 	$body = ConvertTo-Json $nodes -Depth 6 -Compress
