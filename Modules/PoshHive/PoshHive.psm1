@@ -119,40 +119,69 @@ function Get-HiveNodeByType {
 	)
 	# resolve resource type schema identifier
 	$nodeResourceId = $HiveNodeTypes[$NodeType.TolowerInvariant()]
-	Write-Verbose "Resolved resource type schema identifier: $nodeResourceId"
+	Write-Verbose "NodeType schema: $nodeResourceId"
 	
-	$response = $null
-	if ($Minimal) {
-		$response = Get-HiveNode -Filter id, nodeType
-	} else {
-		$response = Get-HiveNode
-	}
-	
+	$response = Get-HiveNode -Minimal:$Minimal
 	$filteredNodes = $response |
-		Where-Object { $_.nodeType -ilike "*$nodeResourceId*" } |
-		Select-Object -Unique
+		Where-Object {
+			$_.nodeType -ilike "*$nodeResourceId*"
+		}
 	
 	return $filteredNodes
 }
 
 function Get-HiveNode {
+	<#
+	.SYNOPSIS
+		Get nodes that make up the Hive system.
+	.DESCRIPTION
+		Get all Hive nodes or a specific node. Filters can be applied to minimise data and
+		improve overall response times.
+	.EXAMPLE
+		Get-HiveNode
+		Get all nodes
+	.EXAMPLE
+		Get-HiveNode -Minimal -Filter name
+		Get all nodes and restrict the response data to mandatory fields and name.
+	.LINK
+		Get-HiveNodeByType
+	.INPUTS
+		Does not take pipeline input.
+	.OUTPUTS
+		Hashtable of Hive Nodes.
+	#>
 	[CmdletBinding()] param (
 	[Parameter(Mandatory=$false, Position = 0)]
+		# Hive node identifier
 		[guid] $Id = [guid]::Empty,
 	[Parameter(Mandatory=$false, Position = 1)]
 		[ValidateNotNullOrEmpty()]
-		[array] $Filter
+		# Apply custom filters that reduce the requested data fields to the requested set
+		# and any mandatory fields like id.
+		[array] $Filter,
+	[Parameter(Mandatory = $false, Position = 2)]
+		# Reduce requested data to minimal working set that consists of id and nodeType 
+		# that are required for resolving most objects.
+		[switch] $Minimal
 	)
 	$Uri = [uri]('' + $HiveUri + '/nodes')
 	# optional resource selection
 	if ($id -ne [guid]::Empty) {
 		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
 	}
-	# apply filter to resource selection
+	# Minimal
+	$fields = $null
+	if ($Minimal) {
+		$fields = @('nodeType')
+	} 
+	# include any other filters
 	if ($PSBoundParameters.ContainsKey('Filter')) {
-		$Uri = [uri]($Uri.AbsoluteUri + '?fields=' + ($Filter -join ','))
+		$fields = $fields + $Filter | Select-Object -Unique
 	}
-
+	# apply filters to resource selection
+	if ($null -ne $fields) {
+		$Uri = [uri]($Uri.AbsoluteUri + '?fields=' + ($fields -join ','))
+	}
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
 	return $response.nodes
 }
@@ -171,8 +200,13 @@ function Get-HiveReceiver {
 	[Parameter(Mandatory = $false, Position = 0)]
 		[switch] $Minimal
 	)
-	# apparently the receiver is thermostat by schema
-	return Get-HiveNodeByType -NodeType 'thermostat' -Minimal:$Minimal
+	$receiers = Get-HiveThermostat | ForEach-Object {
+		$_.relationships.zigBeeBindingTable 
+	}
+	# only recievers that are actually comunicating with the thermostat
+	return $receiers | ForEach-Object{
+		Get-HiveNode -Id $_.Id
+	}
 }
 
 function Get-HiveHub {
