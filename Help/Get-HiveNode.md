@@ -85,7 +85,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### Hashtable of Hive Nodes.
+### Array of Hive Nodes.
 
 ## NOTES
 

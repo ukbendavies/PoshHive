@@ -146,7 +146,7 @@ function Get-HiveNode {
 	.INPUTS
 		Does not take pipeline input.
 	.OUTPUTS
-		Hashtable of Hive Nodes.
+		Array of Hive Nodes.
 	#>
 	[CmdletBinding()] param (
 	[Parameter(Mandatory=$false, Position = 0)]
