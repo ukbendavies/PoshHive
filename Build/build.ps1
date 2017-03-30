@@ -39,7 +39,7 @@ Import-Module $modules\PoshHive -Force
 if (Test-Path $helpDir) {
 	rm $helpDir\*.* -Force
 }
-New-MarkdownHelp -Module poshhive -Force -OutputFolder $helpDir
+New-MarkdownHelp -Module poshhive -Force -OutputFolder $helpDir -NoMetadata -AlphabeticParamsOrder
 
 # generate markdown function toc, syntax and links to generated help
 # Note: at this time you need to manually copy the results from $logDir\FunctionToc.md into the readme

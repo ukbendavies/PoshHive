@@ -143,8 +143,6 @@ function Get-HiveNode {
 	.EXAMPLE
 		Get-HiveNode -Minimal -Filter name
 		Get all nodes and restrict the response data to mandatory fields and name.
-	.LINK
-		Get-HiveNodeByType
 	.INPUTS
 		Does not take pipeline input.
 	.OUTPUTS

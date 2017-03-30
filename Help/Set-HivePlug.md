@@ -1,9 +1,3 @@
----
-external help file: PoshHive-help.xml
-online version: 
-schema: 2.0.0
----
-
 # Set-HivePlug
 
 ## SYNOPSIS
@@ -28,21 +22,6 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Id
 {{Fill Id Description}}
@@ -70,6 +49,21 @@ Accepted values: ON, OFF
 
 Required: True
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

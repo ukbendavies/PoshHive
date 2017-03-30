@@ -1,9 +1,3 @@
----
-external help file: PoshHive-help.xml
-online version: 
-schema: 2.0.0
----
-
 # Get-HiveNode
 
 ## SYNOPSIS
@@ -38,21 +32,6 @@ Get all nodes and restrict the response data to mandatory fields and name.
 
 ## PARAMETERS
 
-### -Id
-Hive node identifier
-
-```yaml
-Type: Guid
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 1
-Default value: [guid]::Empty
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Filter
 Apply custom filters that reduce the requested data fields to the requested set
 and any mandatory fields like id.
@@ -65,6 +44,21 @@ Aliases:
 Required: False
 Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Id
+Hive node identifier
+
+```yaml
+Type: Guid
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 1
+Default value: [guid]::Empty
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -96,6 +90,4 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-
-[Get-HiveNodeByType]()
 

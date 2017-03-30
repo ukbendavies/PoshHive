@@ -183,7 +183,7 @@ Function | Syntax
 [Get-HiveEvent](Help/Get-HiveEvent.md) | `[<CommonParameters>]`
 [Get-HiveHub](Help/Get-HiveHub.md) | `[-Minimal] [<CommonParameters>]`
 [Get-HiveLight](Help/Get-HiveLight.md) | `[-Minimal] [<CommonParameters>]`
-[Get-HiveNode](Help/Get-HiveNode.md) | `[[-Id] <guid>] [[-Filter] <array>] [<CommonParameters>]`
+[Get-HiveNode](Help/Get-HiveNode.md) | `[[-Id] <guid>] [[-Filter] <array>] [-Minimal] [<CommonParameters>]`
 [Get-HiveNodeByType](Help/Get-HiveNodeByType.md) | `[-NodeType] <string> [-Minimal] [<CommonParameters>]`
 [Get-HivePlug](Help/Get-HivePlug.md) | `[-Minimal] [<CommonParameters>]`
 [Get-HiveReceiver](Help/Get-HiveReceiver.md) | `[-Minimal] [<CommonParameters>]`
