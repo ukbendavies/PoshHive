@@ -1,6 +1,6 @@
 <# 
 .SYNOPSIS
-    Build PoshHive
+	Build PoshHive
 	Copyright 2017 Ben Davies
 	MIT License. Full license: https://github.com/ukbendavies/PoshHive/blob/master/LICENSE
 .NOTES
