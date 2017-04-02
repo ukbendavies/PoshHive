@@ -187,6 +187,7 @@ Function | Syntax
 [Get-HiveNodeByType](Help/Get-HiveNodeByType.md) | `[-NodeType] <string> [-Minimal] [<CommonParameters>]`
 [Get-HivePlug](Help/Get-HivePlug.md) | `[-Minimal] [<CommonParameters>]`
 [Get-HiveReceiver](Help/Get-HiveReceiver.md) | `[-Minimal] [<CommonParameters>]`
+[Get-HiveSession](Help/Get-HiveSession.md) | `[<CommonParameters>]`
 [Get-HiveThermostat](Help/Get-HiveThermostat.md) | `[-Minimal] [<CommonParameters>]`
 [Get-HiveTopology](Help/Get-HiveTopology.md) | `[<CommonParameters>]`
 [Get-HiveUser](Help/Get-HiveUser.md) | `[<CommonParameters>]`

@@ -28,11 +28,11 @@ http://alertme.com/schema/json/node.class.synthetic.control.device.uniform.sched
 #>
 Set-Variable AlertMeSchemaUri $([uri]'http://alertme.com/schema/json') -Option constant
 Set-Variable HiveNodeTypes @{
-    'hub'                = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.hub.json#';
-    'thermostat'         = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostat.json#';
-    'smartplug'          = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.smartplug.json#';
-    'thermostatui'       = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostatui.json#';
-    'colourtunablelight' = '' + $AlertMeSchemaUri.AbsoluteUri + '/node.class.colour.tunable.light.json#'
+    'hub'                = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.hub.json#';
+    'thermostat'         = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostat.json#';
+    'smartplug'          = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.smartplug.json#';
+    'thermostatui'       = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostatui.json#';
+    'colourtunablelight' = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.colour.tunable.light.json#'
 } -Option constant
 
 Set-Variable ClientIdentifier 'Hive Web Dashboard' -Option constant
@@ -41,7 +41,7 @@ $HiveHeaders = @{
     'Content-Type'   = $ContentType;
     'Accept'         = $ContentType;
     'X-Omnia-Client' = $ClientIdentifier;
-    'X-Omnia-Access-Token' = ''
+    'X-Omnia-Access-Token' = [String]::Empty
 }
 
 # private functions
@@ -63,9 +63,15 @@ function GetNodesDataStructure {
 # public functions
 function Disconnect-HiveSession {
 	[CmdletBinding()] param ()
-	# todo - workout if there is an actual logoff process
+
+	# logoff session
+	$sessionId = $HiveHeaders.'X-Omnia-Access-Token'
+	if ($sessionId -ne [String]::Empty) {
+		$Uri = [uri]([String]::Empty + $HiveUri + '/auth/sessions' + '/' + $sessionId)
+		Invoke-RestMethod -Method Delete -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
+	}
 	# remove existing access token
-	$HiveHeaders.'X-Omnia-Access-Token' = ''
+	$HiveHeaders.'X-Omnia-Access-Token' = [String]::Empty
 	Write-Verbose "Removed access token, further calls will fail until new access token is available."
 }
 
@@ -74,7 +80,7 @@ function Connect-HiveSession {
 	[Parameter(Mandatory = $true, Position = 0)]
 		[PSCredential] [System.Management.Automation.Credential()] $Credential
 	)
-	$Uri = [uri]('' + $HiveUri + '/auth/sessions')
+	$Uri = [uri]([String]::Empty + $HiveUri + '/auth/sessions')
 
 	# create hive login data-structure
 	$session = @{
@@ -96,7 +102,7 @@ function Connect-HiveSession {
 
 	# store the first session access token for downstream calls
 	$mySession = $response.sessions[0]
-	if ($null -eq $mySession -or $mySession -eq '') {
+	if ($null -eq $mySession -or $mySession -eq [String]::Empty) {
 		throw 'No valid session'
 	}
 
@@ -107,6 +113,16 @@ function Connect-HiveSession {
 	)
 	$HiveHeaders.'X-Omnia-Access-Token' = $mySession.sessionId
 	Write-Output $sessionInfo
+}
+
+function Get-HiveSession {
+	[CmdletBinding()] param ()
+	$thisSessionId = $HiveHeaders.'X-Omnia-Access-Token' 
+	$Uri = [uri]([String]::Empty + $HiveUri + '/auth/sessions' + '/' + $thisSessionId)
+
+	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
+
+	return $response.sessions
 }
 
 function Get-HiveNodeByType {
@@ -162,7 +178,7 @@ function Get-HiveNode {
 		# that are required for resolving most objects.
 		[switch] $Minimal
 	)
-	$Uri = [uri]('' + $HiveUri + '/nodes')
+	$Uri = [uri]([String]::Empty + $HiveUri + '/nodes')
 	# optional resource selection
 	if ($id -ne [guid]::Empty) {
 		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
@@ -282,7 +298,7 @@ function Set-HiveLight {
 		# Desired Colour Temperature.
 		[uint16] $ColourTemperature = 2700
 	)
-	$Uri = [uri]('' + $HiveUri + '/nodes')
+	$Uri = [uri]([String]::Empty + $HiveUri + '/nodes')
 	if ($id -ne [guid]::Empty) {
 		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
 	}
@@ -340,7 +356,7 @@ function Set-HiveReceiver {
 	[Parameter(Mandatory = $true, Position = 1)]
 		[uint16] $TargetTemperature 
 	)
-	$Uri = [uri]('' + $HiveUri + '/nodes')
+	$Uri = [uri]([String]::Empty + $HiveUri + '/nodes')
 	if ($id -ne [guid]::Empty) {
 		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
 	}
@@ -375,7 +391,7 @@ function Set-HivePlug {
 		[ValidateSet('ON', 'OFF')]
 		[string] $PowerState
 	)
-	$Uri = [uri]('' + $HiveUri + '/nodes')
+	$Uri = [uri]([String]::Empty + $HiveUri + '/nodes')
 	if ($id -ne [guid]::Empty) {
 		$Uri = [uri]($Uri.AbsoluteUri + '/' + $Id)
 	}
@@ -412,7 +428,7 @@ function Get-HiveEvent {
 		Events that have occurred in your Hive Home.
 	#>
 	[CmdletBinding()] param ()
-	$Uri = [uri]('' + $HiveUri + '/events')
+	$Uri = [uri]([String]::Empty + $HiveUri + '/events')
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
 	return $response.events
 }
@@ -427,7 +443,7 @@ function Get-HiveTopology {
 		Topological representation of your Hive Home.
 	#>
 	[CmdletBinding()] param ()
-	$Uri = [uri]('' + $HiveUri + '/topology')
+	$Uri = [uri]([String]::Empty + $HiveUri + '/topology')
 	
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
 	return $response.topology
@@ -443,7 +459,7 @@ function Get-HiveUser {
 		Current logged in user data.
 	#>
 	[CmdletBinding()] param ()
-	$Uri = [uri]('' + $HiveUri + '/users')
+	$Uri = [uri]([String]::Empty + $HiveUri + '/users')
 	
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
 	return $response.users
@@ -467,7 +483,7 @@ function Get-HiveWeather {
 		# By default the current user postcode is used.
 		[string] $PostCode
 	)
-	$Uri = [uri]('' + $HiveWeatherUri + '/weather')
+	$Uri = [uri]([String]::Empty + $HiveWeatherUri + '/weather')
 	
 	if ($PSBoundParameters.ContainsKey('PostCode')) {
 		$query = '?postcode=' + $PostCode
