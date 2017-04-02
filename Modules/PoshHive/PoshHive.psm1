@@ -232,16 +232,55 @@ function Get-HiveLight {
 }
 
 function Set-HiveLight {
+	<#
+	.SYNOPSIS
+		Set properties on a specific Hive light.
+	.DESCRIPTION
+		Update specified Hive light with new desired state that can include a combination of: 
+		Brightness, Hue, PowerState, ColourMode and ColourTemperature 
+	.INPUTS
+		Accepts pipeline input from Get-HiveLight.
+	.OUTPUTS
+		WebResponse, TODO: this will change to updated Hive Node which is more restful.
+	.EXAMPLE
+		Simple script that increases the Brightness in increments of 5 until the maximum is reached and then reverses the direction and decreases the Brightness until minimum is reached and loops.
+
+		$light = Get-HiveLight | Select -First 1
+		$dir = $true
+		$lux=5
+		while(1) {
+			if ($lux -le 5){ $dir=$true }; if ($lux -ge 100){ $dir=$false }
+			if ($dir){ $lux=$lux+5 } else { $lux=$lux-5 }
+			Set-HiveLight -Id $light.id -Brightness $lux
+			# 300ms updates, be kind to Hive API, should probably avoid lower than this!
+			Sleep -m 300
+		}
+	#>
 	[CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Low')] param (
 	[Parameter(Mandatory = $true, Position = 0,
 		ValueFromPipelineByPropertyName = $true)]
+		# Hive light node identifier.
 		[guid] $Id,
 	[Parameter(Mandatory = $false, Position = 1)]
 		[ValidateSet('ON', 'OFF')]
+		# Desired PowerState for the device.
 		[string] $PowerState,
 	[Parameter(Mandatory = $false, Position = 2)]
 		[ValidateSet('COLOUR', 'TUNABLE')]
-		[string] $ColourMode
+		# Desired mode of operation (Only for Hive ColourLight).
+		[string] $ColourMode,
+	[Parameter(Mandatory = $false, Position = 3)]
+		[ValidateRange(0, 355)]
+		# Desired Hue (only for Hive ColourLight).
+		[uint16] $Hue = 0,
+	[Parameter(Mandatory = $false, Position = 4)]
+		[ValidateRange(5, 100)]
+		# Desired Brightness.
+		[uint16] $Brightness = 5,
+	[Parameter(Mandatory = $false, Position = 5)]
+		[ValidateRange(2700, 6533)]
+		# Desired Colour Temperature.
+		[uint16] $ColourTemperature = 2700
 	)
 	$Uri = [uri]('' + $HiveUri + '/nodes')
 	if ($id -ne [guid]::Empty) {
@@ -256,7 +295,7 @@ function Set-HiveLight {
 			$newState = @{'targetValue' = $PowerState.ToUpperInvariant()}
 			$nodes.nodes[0].attributes.Add('state', $newState)
 		} else {
-			Write-Verbose "User abprted confirm action."
+			Write-Verbose "User aborted confirm action."
 			return
 		}
 	}
@@ -267,17 +306,23 @@ function Set-HiveLight {
 
 		switch ($ColourMode) {
 			'COLOUR' {
-				$newState = @{'targetValue' = 0}
+				$newState = @{'targetValue' = $Hue}
 				$nodes.nodes[0].attributes.Add('hsvHue', $newState)
-				Write-Verbose "Add hsvHue value 0 as setting colour mode alone doesn't work"
+				Write-Verbose "Setting colour temperature to new value: $Hue"
 			};
 			'TUNABLE'{
-				$newState = @{'targetValue' = 2700}
+				$newState = @{'targetValue' = $ColourTemperature}
 				$nodes.nodes[0].attributes.Add('colourTemperature', $newState)
-				Write-Verbose "Add colourTemperature value 2700 as setting colour mode alone doesn't work"
+				Write-Verbose "Setting colour temperature to new value: $ColourTemperature"
 			}
 		}
 	} 
+
+	if ($PSBoundParameters.ContainsKey('Brightness')) {
+		$newState = @{'targetValue' = $Brightness}
+		$nodes.nodes[0].attributes.Add('brightness', $newState)
+		Write-Verbose "Setting brightness to new value: $Brightness"
+	}
 
 	$body = ConvertTo-Json $nodes -Depth 6 -Compress
 	$body | Out-String | Write-Verbose
@@ -308,7 +353,7 @@ function Set-HiveReceiver {
 			$newState = @{'targetValue' = $TargetTemperature}
 			$nodes.nodes[0].attributes.Add('targetHeatTemperature', $newState)
 		} else {
-			Write-Verbose "User abprted confirm action."
+			Write-Verbose "User aborted confirm action."
 			return
 		}
 	}
@@ -343,7 +388,7 @@ function Set-HivePlug {
 			$newState = @{'targetValue' = $PowerState.ToUpperInvariant()}
 			$nodes.nodes[0].attributes.Add('state', $newState)
 		} else {
-			Write-Verbose "User abprted confirm action."
+			Write-Verbose "User aborted confirm action."
 			return
 		}
 	}
