@@ -17,8 +17,8 @@ Brightness, Hue, PowerState, ColourMode and ColourTemperature
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
-```Powershell
-Simple script that increases the Brightness in increments of 5 until the maximum is reached and then reverses the direction and decreases the Brightness until minimum is reached and loops.
+```powershell
+# Simple script that increases the Brightness in increments of 5 until the maximum is reached and then reverses the direction and decreases the Brightness until minimum is reached and loops.
 
 $light = Get-HiveLight | Select -First 1
 $dir = $true

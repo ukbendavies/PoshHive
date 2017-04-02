@@ -242,8 +242,8 @@ function Set-HiveLight {
 		Accepts pipeline input from Get-HiveLight.
 	.OUTPUTS
 		WebResponse, TODO: this will change to updated Hive Node which is more restful.
-	.EXAMPLE
-		Simple script that increases the Brightness in increments of 5 until the maximum is reached and then reverses the direction and decreases the Brightness until minimum is reached and loops.
+	.EXAMPLE 
+		# Simple script that increases the Brightness in increments of 5 until the maximum is reached and then reverses the direction and decreases the Brightness until minimum is reached and loops.
 
 		$light = Get-HiveLight | Select -First 1
 		$dir = $true

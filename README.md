@@ -191,7 +191,7 @@ Function | Syntax
 [Get-HiveTopology](Help/Get-HiveTopology.md) | `[<CommonParameters>]`
 [Get-HiveUser](Help/Get-HiveUser.md) | `[<CommonParameters>]`
 [Get-HiveWeather](Help/Get-HiveWeather.md) | `[[-PostCode] <string>] [<CommonParameters>]`
-[Set-HiveLight](Help/Set-HiveLight.md) | `[-Id] <guid> [[-PowerState] <string>] [[-ColourMode] <string>] [-WhatIf] [-Confirm] [<CommonParameters>]`
+[Set-HiveLight](Help/Set-HiveLight.md) | `[-Id] <guid> [[-PowerState] <string>] [[-ColourMode] <string>] [[-Hue] <uint16>] [[-Brightness] <uint16>] [[-ColourTemperature] <uint16>] [-WhatIf] [-Confirm] [<CommonParameters>]`
 [Set-HivePlug](Help/Set-HivePlug.md) | `[-Id] <guid> [-PowerState] <string> [-WhatIf] [-Confirm] [<CommonParameters>]`
 [Set-HiveReceiver](Help/Set-HiveReceiver.md) | `[-Id] <guid> [-TargetTemperature] <uint16> [-WhatIf] [-Confirm] [<CommonParameters>]`
 
