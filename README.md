@@ -197,11 +197,14 @@ Function | Syntax
 
 ## Coming soon
 - Further abstraction, this was my very first attempt so its not as abstracted as I'd like
-- Enhancement to ColourLight to set various colour parameters and brightness.
+- [in-progress] Enhancement to ColourLight to set various colour parameters and brightness.
 - Additional controls over the receiver.
+- [in-progress] Documentation on the public functions
+  - [complete] doc generators.
+- Tests
+  - [complete] static code analysis 
+  - [not started] pester tests
 - Various other enhancements.
-- Documentation on the public functions [in progress] [doc generators - complete].
-- Tests [static code analysis - complete] [pester tests - not started]
 - Bug fixes.
 
 ## Acknowledgements
