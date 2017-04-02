@@ -4,7 +4,7 @@
 	Copyright 2017 Ben Davies
 	MIT License. Full license: https://github.com/ukbendavies/PoshHive/blob/master/LICENSE
 .NOTES
-    Requires PSScriptAnalyzer - static code analysis
+	Requires PSScriptAnalyzer - static code analysis
 	Requires platyPS - generate automated powershell help
 #>
 [CmdletBinding()] param ()
@@ -17,7 +17,7 @@ $helpDir = Join-Path $base Help
 # log directory should not be uploaded to source control
 $logDir = Join-Path $base Log
 if (Test-Path $logDir) {
-	# remove any artifacts from previous build
+	# remove any artefacts from previous build
 	rmdir $logDir\*.* -Force
 } else {
 	mkdir $logDir
@@ -28,7 +28,7 @@ Import-Module PSScriptAnalyzer
 $analysis = Invoke-ScriptAnalyzer -Path $modules\PoshHive\PoshHive.psm1
 if (@($analysis | ?{$_.Severity -eq 'Error'}).length -gt 0) {
 	Write-Output $analysis
-	throw "Build Failed: ScriptAnalyzer found errors"
+	throw "Build Failed: Script Analyzer found errors"
 } else {
 	Write-Output $analysis
 }
