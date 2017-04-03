@@ -18,7 +18,9 @@ $PSVersionTable | Write-Output
 
 # build environment initialization
 if (-not (Get-Module PSScriptAnalyzer)) {
-	Install-Module -Name PSScriptAnalyzer
+	Write-Output 'configuring packages'
+	Find-Package PSScriptAnalyzer
+	#Install-Module -Name PSScriptAnalyzer
 }
 
 $base = Resolve-Path "$PSScriptRoot\.."
