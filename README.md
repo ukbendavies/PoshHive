@@ -1,4 +1,7 @@
-# PoshHive
+ | 
+--- | ---
+# PoshHive | [![Build status](https://ci.appveyor.com/api/projects/status/n3rrweuli6jw7lke?svg=true)](https://ci.appveyor.com/project/ukbendavies/poshhive)
+
 British Gas HIVE Home powershell wrapper that provides core HIVE platform functionality in a Windows powershell instance
 that can be used interactively, scripted for expanded integrations, or scheduling e.g. at 6pm turn on the Lights (use with 
 basic windows scheduler for this capability).
@@ -215,5 +218,3 @@ Function | Syntax
 - HIVE REST API V6.1, great investigation by James Saunders
   http://www.smartofthehome.com/2016/05/hive-rest-api-v6/
 
-## Build and Tests
-[![Build status](https://ci.appveyor.com/api/projects/status/n3rrweuli6jw7lke?svg=true)](https://ci.appveyor.com/project/ukbendavies/poshhive)
