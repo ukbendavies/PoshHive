@@ -214,3 +214,6 @@ Function | Syntax
   https://api.prod.bgchprod.info:8443/api/docs
 - HIVE REST API V6.1, great investigation by James Saunders
   http://www.smartofthehome.com/2016/05/hive-rest-api-v6/
+
+## Build and Tests
+[![Build status](https://ci.appveyor.com/api/projects/status/n3rrweuli6jw7lke?svg=true)](https://ci.appveyor.com/project/ukbendavies/poshhive)
