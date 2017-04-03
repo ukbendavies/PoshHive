@@ -210,7 +210,7 @@ Function | Syntax
 - Bug fixes.
 
 ## Acknowledgements
-- HIVE Rest Api v6 documentation published by alertme
+- HIVE REST API V6.5, documentation published by alertme
   https://api.prod.bgchprod.info:8443/api/docs
 - HIVE REST API V6.1, great investigation by James Saunders
   http://www.smartofthehome.com/2016/05/hive-rest-api-v6/
