@@ -1,6 +1,6 @@
- | 
---- | ---
-# PoshHive | [![Build status](https://ci.appveyor.com/api/projects/status/n3rrweuli6jw7lke?svg=true)](https://ci.appveyor.com/project/ukbendavies/poshhive)
+| | | |
+|-|-|-|
+| # PoshHive | [![Build status](https://ci.appveyor.com/api/projects/status/n3rrweuli6jw7lke?svg=true)](https://ci.appveyor.com/project/ukbendavies/poshhive) |
 
 British Gas HIVE Home powershell wrapper that provides core HIVE platform functionality in a Windows powershell instance
 that can be used interactively, scripted for expanded integrations, or scheduling e.g. at 6pm turn on the Lights (use with 
