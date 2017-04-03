@@ -180,6 +180,7 @@ Function | Syntax
 --- | ---
 [Connect-HiveSession](Help/Connect-HiveSession.md) | `[-Credential] <pscredential> [<CommonParameters>]`
 [Disconnect-HiveSession](Help/Disconnect-HiveSession.md) | `[<CommonParameters>]`
+[Get-HiveDeviceToken](Help/Get-HiveDeviceToken.md) | `[<CommonParameters>]`
 [Get-HiveEvent](Help/Get-HiveEvent.md) | `[<CommonParameters>]`
 [Get-HiveHub](Help/Get-HiveHub.md) | `[-Minimal] [<CommonParameters>]`
 [Get-HiveLight](Help/Get-HiveLight.md) | `[-Minimal] [<CommonParameters>]`
@@ -210,6 +211,6 @@ Function | Syntax
 
 ## Acknowledgements
 - HIVE Rest Api v6 documentation published by alertme
-  http://www.smartofthehome.com/wp-content/uploads/2016/03/AlertMe-API-v6.1-Documentation.pdf
+  https://api.prod.bgchprod.info:8443/api/docs
 - HIVE REST API V6.1, great investigation by James Saunders
   http://www.smartofthehome.com/2016/05/hive-rest-api-v6/
