@@ -8,12 +8,23 @@
 	Requires platyPS - generate automated powershell help
 #>
 [CmdletBinding()] param ()
+$ErrorActionPreference = "STOP"
 Set-StrictMode -Version Latest
 Set-PsDebug -Strict
+
+# get information about the build environment
+Get-Module -ListAvailable | Write-Output
+$PSVersionTable | Write-Output
+
+# build environment initialization
+if (-not (Get-Module PSScriptAnalyzer)) {
+	Install-Module -Name PSScriptAnalyzer
+}
 
 $base = Resolve-Path "$PSScriptRoot\.."
 $modules = Resolve-Path "$base\Modules"
 $helpDir = Join-Path $base Help
+
 # log directory should not be uploaded to source control
 $logDir = Join-Path $base Log
 if (Test-Path $logDir) {
@@ -23,7 +34,7 @@ if (Test-Path $logDir) {
 	mkdir $logDir
 }
 
-Write-Verbose 'execting static code analysis'
+Write-Output 'executing static code analysis'
 Import-Module PSScriptAnalyzer
 $analysis = Invoke-ScriptAnalyzer -Path $modules\PoshHive\PoshHive.psm1
 if (@($analysis | ?{$_.Severity -eq 'Error'}).length -gt 0) {
@@ -34,7 +45,7 @@ if (@($analysis | ?{$_.Severity -eq 'Error'}).length -gt 0) {
 }
 
 # generate markdown function help
-Write-Verbose 'building powershell help'
+Write-Output 'building powershell help'
 Import-Module $modules\PoshHive -Force
 if (Test-Path $helpDir) {
 	rm $helpDir\*.* -Force
@@ -45,7 +56,7 @@ New-MarkdownHelp -Module poshhive -Force -OutputFolder $helpDir -NoMetadata -Alp
 # Note: at this time you need to manually copy the results from $logDir\FunctionToc.md into the readme
 # I did consider generating this in-place however I felt the likeliness of splatting something in the readme
 # by mistake outweighed the value as the readme is largely a manual document process.
-Write-Verbose 'building powershell help toc for readme'
+Write-Output 'building powershell help toc for readme'
 $helpTable = $(
 	Get-Command -Module PoshHive | 
 		%{
