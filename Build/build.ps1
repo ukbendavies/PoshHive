@@ -12,16 +12,12 @@ $ErrorActionPreference = "STOP"
 Set-StrictMode -Version Latest
 Set-PsDebug -Strict
 
-# get information about the build environment
-Get-Module -ListAvailable | Write-Output
-$PSVersionTable | Write-Output
-
-# build environment initialization
-if (-not (Get-Module PSScriptAnalyzer)) {
-	Write-Output 'configuring packages'
-	Find-Package PSScriptAnalyzer | Install-Package
+# etablish build environment information
+if ($PSBoundParameters.ContainsKey('Debug')) {
+	Write-Output "Debug information"
+	$PSVersionTable | Write-Output
+	Get-Module -ListAvailable | Write-Output
 }
-
 $base = Resolve-Path "$PSScriptRoot\.."
 $modules = Resolve-Path "$base\Modules"
 $helpDir = Join-Path $base Help
@@ -35,8 +31,15 @@ if (Test-Path $logDir) {
 	mkdir $logDir
 }
 
+# build environment initialization
+if (-not (Get-Module PSScriptAnalyzer)) {
+	Write-Output 'configuring build packages'
+	Find-Package PSScriptAnalyzer | Install-Package
+	Find-Package platyPS | Install-Package
+}
+
 Write-Output 'executing static code analysis'
-Import-Module PSScriptAnalyzer
+Import-Module PSScriptAnalyzer -Verbose
 $analysis = Invoke-ScriptAnalyzer -Path $modules\PoshHive\PoshHive.psm1
 if (@($analysis | ?{$_.Severity -eq 'Error'}).length -gt 0) {
 	Write-Output $analysis
@@ -47,10 +50,11 @@ if (@($analysis | ?{$_.Severity -eq 'Error'}).length -gt 0) {
 
 # generate markdown function help
 Write-Output 'building powershell help'
-Import-Module $modules\PoshHive -Force
+Import-Module $modules\PoshHive -Force -Verbose
 if (Test-Path $helpDir) {
 	rm $helpDir\*.* -Force
 }
+Import-Module platyPS -Verbose
 New-MarkdownHelp -Module poshhive -Force -OutputFolder $helpDir -NoMetadata -AlphabeticParamsOrder
 
 # generate markdown function toc, syntax and links to generated help
