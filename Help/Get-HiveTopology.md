@@ -25,6 +25,8 @@ PS C:\> {{ Add example code here }}
 
 ## INPUTS
 
+### Does not take input.
+
 ## OUTPUTS
 
 ### Topological representation of your Hive Home.

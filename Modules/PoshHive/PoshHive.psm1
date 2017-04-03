@@ -9,8 +9,8 @@ Disclaimer
 - This work is purely my own experiment after I originally asked for a supported HIVE RestAPI on the British Gas requests forum.
 
 Acknowledgements
-- HIVE Rest Api v6 documentation published by alertme
-  http://www.smartofthehome.com/wp-content/uploads/2016/03/AlertMe-API-v6.1-Documentation.pdf
+- HIVE Rest Api documentation published by alertme
+  https://api.prod.bgchprod.info:8443/api/docs
 - HIVE REST API V6.1, great investigation by James Saunders
   http://www.smartofthehome.com/2016/05/hive-rest-api-v6/
 #>
@@ -36,7 +36,7 @@ Set-Variable HiveNodeTypes @{
 } -Option constant
 
 Set-Variable ClientIdentifier 'Hive Web Dashboard' -Option constant
-Set-Variable ContentType 'application/vnd.alertme.zoo-6.1+json' -Option constant
+Set-Variable ContentType 'application/vnd.alertme.zoo-6.5+json' -Option constant
 $HiveHeaders = @{
     'Content-Type'   = $ContentType;
     'Accept'         = $ContentType;
@@ -424,6 +424,8 @@ function Get-HiveEvent {
 		Retrieves the latest set of events that have occurred on the Hive Api surface.
 	.DESCRIPTION
 		Uses the Hive Events Api to get the latest set of events that have occurred in your Hive system.
+	.INPUTS
+		Does not take input.
 	.OUTPUTS
 		Events that have occurred in your Hive Home.
 	#>
@@ -439,6 +441,8 @@ function Get-HiveTopology {
 		Retrieves current representation of your Hive Topology.
 	.DESCRIPTION
 		Uses the Hive Topology Api to get a logical representation of the zigbee network.
+	.INPUTS
+		Does not take input.
 	.OUTPUTS
 		Topological representation of your Hive Home.
 	#>
@@ -455,6 +459,8 @@ function Get-HiveUser {
 		Retrieves information about the logged in Hive user.
 	.DESCRIPTION
 		Uses the login session to retrieve information about the current user.
+	.INPUTS
+		Does not take input.
 	.OUTPUTS
 		Current logged in user data.
 	#>
@@ -465,6 +471,25 @@ function Get-HiveUser {
 	return $response.users
 }
 
+function Get-HiveDeviceToken {
+	<#
+	.SYNOPSIS
+		Get information about linked Hive Devices e.g. Android applications. 
+	.DESCRIPTION
+		When you install a phone or tablet app, Hive stores the linkage in
+		Hive Devices Api. This function gets the list of devices that are
+		active in your account.
+	.INPUTS
+		Does not take input.
+	.OUTPUTS
+		One or more Hive Devices.
+	#>
+	[CmdletBinding()] param ()
+	$Uri = [uri]([String]::Empty + $HiveUri + '/deviceTokens')
+	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
+	return $response.deviceTokens
+}
+
 function Get-HiveWeather {
 	<#
 	.SYNOPSIS
@@ -473,6 +498,8 @@ function Get-HiveWeather {
 		Uses a PostCode to retrieve current outside temperature. 
 		By default the users postcode is used in the query, this can 
 		be overridden using the PostCode parameter.
+	.INPUTS
+		Does not take pipeline input.
 	.OUTPUTS
 		Current weather data retrieved from Hive.
 	#>
@@ -490,6 +517,7 @@ function Get-HiveWeather {
 	} else {
 		$user = Get-HiveUser
 		$query = '?postcode=' + $user.postcode
+		$query += '&country=' + $user.country
 	}
 	$Uri = [uri]($Uri.AbsoluteUri + $query)
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders

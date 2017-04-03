@@ -43,6 +43,8 @@ Accept wildcard characters: False
 
 ## INPUTS
 
+### Does not take pipeline input.
+
 ## OUTPUTS
 
 ### Current weather data retrieved from Hive.
