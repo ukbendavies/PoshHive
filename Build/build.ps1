@@ -7,6 +7,7 @@
 	Requires PSScriptAnalyzer - static code analysis
 	Requires platyPS - generate automated powershell help
 #>
+#Requires -Version 3.0
 [CmdletBinding()] param ()
 $ErrorActionPreference = "STOP"
 Set-StrictMode -Version Latest
