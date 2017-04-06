@@ -37,7 +37,7 @@ Set-Variable HiveNodeTypes @{
 } -Option constant
 
 Set-Variable ClientIdentifier 'Hive Web Dashboard' -Option constant
-Set-Variable ContentType 'application/vnd.alertme.zoo-6.5+json' -Option constant
+Set-Variable ContentType 'application/vnd.alertme.zoo-6.4+json' -Option constant
 $HiveHeaders = @{
     'Content-Type'   = $ContentType;
     'Accept'         = $ContentType;
