@@ -210,6 +210,7 @@ Function | Syntax
   - [not started] pester tests
 - Various other enhancements.
 - Bug fixes.
+- Investigate changes to model in API v6.5 
 
 ## Acknowledgements
 - HIVE REST API V6.5, documentation published by alertme
