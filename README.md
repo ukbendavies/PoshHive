@@ -28,8 +28,11 @@ Import the PoshHive module downloaded from GitHub: https://github.com/ukbendavie
     Connect-HiveSession -Credential 'your hive username usually email address'
    ```
 
-  - password process makes use of standard powershell Get-Credential mechanism.
-  - passwords are securestring and then wrapped in https transport direct to HIVE API.
+#### How are passwords handled?
+  - Connect-HiveSession uses Get-Credential process that stores data as a securestring.
+  - the securestring is unwrapped at point of use during the initial authentication handshake.
+  - https protocol is used to transfer this information directly to HIVE using its API.
+  - further API calls use the AccessToken received during initial authentication.
 
 ### Setting the temperature
 
