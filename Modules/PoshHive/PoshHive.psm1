@@ -9,7 +9,7 @@ Disclaimer
 - This work is purely my own experiment after I originally asked for a supported HIVE RestAPI on the British Gas requests forum.
 
 Acknowledgements
-- HIVE Rest Api documentation published by alertme
+- HIVE Rest API documentation published by alertme
   https://api.prod.bgchprod.info:8443/api/docs
 - HIVE REST API V6.1, great investigation by James Saunders
   http://www.smartofthehome.com/2016/05/hive-rest-api-v6/
@@ -29,20 +29,20 @@ http://alertme.com/schema/json/node.class.synthetic.control.device.uniform.sched
 #>
 Set-Variable AlertMeSchemaUri $([uri]'http://alertme.com/schema/json') -Option constant
 Set-Variable HiveNodeTypes @{
-    'hub'                = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.hub.json#';
-    'thermostat'         = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostat.json#';
-    'smartplug'          = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.smartplug.json#';
-    'thermostatui'       = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostatui.json#';
-    'colourtunablelight' = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.colour.tunable.light.json#'
+	'hub'                = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.hub.json#';
+	'thermostat'         = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostat.json#';
+	'smartplug'          = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.smartplug.json#';
+	'thermostatui'       = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.thermostatui.json#';
+	'colourtunablelight' = [String]::Empty + $AlertMeSchemaUri.AbsoluteUri + '/node.class.colour.tunable.light.json#'
 } -Option constant
 
 Set-Variable ClientIdentifier 'Hive Web Dashboard' -Option constant
 Set-Variable ContentType 'application/vnd.alertme.zoo-6.4+json' -Option constant
 $HiveHeaders = @{
-    'Content-Type'   = $ContentType;
-    'Accept'         = $ContentType;
-    'X-Omnia-Client' = $ClientIdentifier;
-    'X-Omnia-Access-Token' = [String]::Empty
+	'Content-Type'   = $ContentType;
+	'Accept'         = $ContentType;
+	'X-Omnia-Client' = $ClientIdentifier;
+	'X-Omnia-Access-Token' = [String]::Empty
 }
 
 # private functions
@@ -215,10 +215,10 @@ function Get-HiveReceiver {
 	[Parameter(Mandatory = $false, Position = 0)]
 		[switch] $Minimal
 	)
-	$receiers = Get-HiveThermostat | ForEach-Object {
+	$receivers = Get-HiveThermostat | ForEach-Object {
 		$_.relationships.zigBeeBindingTable 
 	}
-	# only recievers that are actually comunicating with the thermostat
+	# only receivers that are actually communicating with the thermostat
 	return $receiers | ForEach-Object{
 		Get-HiveNode -Id $_.Id
 	}
@@ -422,9 +422,9 @@ function Set-HivePlug {
 function Get-HiveEvent {
 	<#
 	.SYNOPSIS
-		Retrieves the latest set of events that have occurred on the Hive Api surface.
+		Retrieves the latest set of events that have occurred on the Hive API surface.
 	.DESCRIPTION
-		Uses the Hive Events Api to get the latest set of events that have occurred in your Hive system.
+		Uses the Hive Events API to get the latest set of events that have occurred in your Hive system.
 	.INPUTS
 		Does not take input.
 	.OUTPUTS
@@ -441,7 +441,7 @@ function Get-HiveTopology {
 	.SYNOPSIS
 		Retrieves current representation of your Hive Topology.
 	.DESCRIPTION
-		Uses the Hive Topology Api to get a logical representation of the zigbee network.
+		Uses the Hive Topology API to get a logical representation of the zigbee network.
 	.INPUTS
 		Does not take input.
 	.OUTPUTS
@@ -478,7 +478,7 @@ function Get-HiveDeviceToken {
 		Get information about linked Hive Devices e.g. Android applications. 
 	.DESCRIPTION
 		When you install a phone or tablet app, Hive stores the linkage in
-		Hive Devices Api. This function gets the list of devices that are
+		Hive Devices API. This function gets the list of devices that are
 		active in your account.
 	.INPUTS
 		Does not take input.

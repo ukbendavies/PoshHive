@@ -10,7 +10,7 @@ Get-HiveTopology
 ```
 
 ## DESCRIPTION
-Uses the Hive Topology Api to get a logical representation of the zigbee network.
+Uses the Hive Topology API to get a logical representation of the zigbee network.
 
 ## EXAMPLES
 

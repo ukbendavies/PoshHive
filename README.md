@@ -96,7 +96,7 @@ round-trip state validation.
     reportChangedTime  : 1490444534755
    ```
    - my kettle has a reportedValue of 2904 watts (about right).
-   - one of the many hidden features that seem to be present in the hardaware platform but not yet released 
+   - one of the many hidden features that seem to be present in the hardware platform but not yet released 
      in the HIVE software (App/WebUI).
 
 ## Debugging

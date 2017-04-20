@@ -12,7 +12,7 @@ Get-HiveDeviceToken
 
 ## DESCRIPTION
 When you install a phone or tablet app, Hive stores the linkage in
-Hive Devices Api.
+Hive Devices API.
 This function gets the list of devices that are
 active in your account.
 

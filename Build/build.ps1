@@ -5,7 +5,7 @@
 	MIT License. Full license: https://github.com/ukbendavies/PoshHive/blob/master/LICENSE
 .NOTES
 	Requires PSScriptAnalyzer - static code analysis
-	Requires platyPS - generate automated powershell help
+	Requires platyPS - generate automated PowerShell help
 #>
 #Requires -Version 3.0
 [CmdletBinding()] param ()
@@ -13,7 +13,7 @@ $ErrorActionPreference = "STOP"
 Set-StrictMode -Version Latest
 Set-PsDebug -Strict
 
-# etablish build environment information
+# establish build environment information
 if ($PSBoundParameters.ContainsKey('Debug')) {
 	Write-Output "Debug information"
 	$PSVersionTable | Write-Output
@@ -44,7 +44,7 @@ Import-Module PSScriptAnalyzer -Verbose
 $analysis = Invoke-ScriptAnalyzer -Path $modules\PoshHive\PoshHive.psm1
 if (@($analysis | ?{$_.Severity -eq 'Error'}).length -gt 0) {
 	Write-Output $analysis
-	throw "Build Failed: Script Analyzer found errors"
+	throw "Build Failed: Script Analyser found errors"
 } else {
 	Write-Output $analysis
 }
@@ -58,7 +58,7 @@ if (Test-Path $helpDir) {
 Import-Module platyPS -Verbose
 New-MarkdownHelp -Module poshhive -Force -OutputFolder $helpDir -NoMetadata -AlphabeticParamsOrder
 
-# generate markdown function toc, syntax and links to generated help
+# generate markdown function table of contents, syntax and links to generated help
 # Note: at this time you need to manually copy the results from $logDir\FunctionToc.md into the readme
 # I did consider generating this in-place however I felt the likeliness of splatting something in the readme
 # by mistake outweighed the value as the readme is largely a manual document process.

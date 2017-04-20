@@ -1,7 +1,7 @@
 # Get-HiveEvent
 
 ## SYNOPSIS
-Retrieves the latest set of events that have occurred on the Hive Api surface.
+Retrieves the latest set of events that have occurred on the Hive API surface.
 
 ## SYNTAX
 
@@ -10,7 +10,7 @@ Get-HiveEvent
 ```
 
 ## DESCRIPTION
-Uses the Hive Events Api to get the latest set of events that have occurred in your Hive system.
+Uses the Hive Events API to get the latest set of events that have occurred in your Hive system.
 
 ## EXAMPLES
 
