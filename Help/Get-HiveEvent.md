@@ -6,7 +6,7 @@ Retrieves the latest set of events that have occurred on the Hive API surface.
 ## SYNTAX
 
 ```
-Get-HiveEvent
+Get-HiveEvent [[-Days] <UInt16>]
 ```
 
 ## DESCRIPTION
@@ -23,6 +23,21 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -Days
+Get events only for last (n) Days.
+
+```yaml
+Type: UInt16
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 1
+Default value: 1
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## INPUTS
 
 ### Does not take input.
@@ -34,4 +49,6 @@ PS C:\> {{ Add example code here }}
 ## NOTES
 
 ## RELATED LINKS
+
+[Get-HiveAlert]()
 

@@ -219,7 +219,7 @@ function Get-HiveReceiver {
 		$_.relationships.zigBeeBindingTable 
 	}
 	# only receivers that are actually communicating with the thermostat
-	return $receiers | ForEach-Object{
+	return $receivers | ForEach-Object{
 		Get-HiveNode -Id $_.Id
 	}
 }
@@ -429,11 +429,21 @@ function Get-HiveEvent {
 		Does not take input.
 	.OUTPUTS
 		Events that have occurred in your Hive Home.
+	.LINK
+		Get-HiveAlert
 	#>
-	[CmdletBinding()] param ()
+	[CmdletBinding()] param (
+	[Parameter(Mandatory = $false, Position = 0)]
+		# Get events only for last (n) Days.
+		[uint16] $Days = 1
+	)
 	$Uri = [uri]([String]::Empty + $HiveUri + '/events')
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
-	return $response.events
+	# todo research if this can be done as a query for server side processing
+	$filteredEvents = $response.events | Where-Object {
+		(Get-Date).Subtract((Get-Date $_.time)).Days -le $Days
+	}
+	return $filteredEvents
 }
 
 function Get-HiveTopology {
@@ -470,6 +480,43 @@ function Get-HiveUser {
 	
 	$response = Invoke-RestMethod -Method Get -Uri $Uri.AbsoluteUri -Headers $HiveHeaders
 	return $response.users
+}
+
+function Get-HiveAlert {
+	<#
+	.SYNOPSIS
+		Get information about Hive alerts triggered within the last day e.g. device not responding. 
+	.DESCRIPTION
+		This function gets any alert events and resolves these to the faulting device.
+
+		There may be several alerts for a particular node, for example when the alert started and
+		another for when the alert finished. This state can be resolved from the alertFacts.
+	.INPUTS
+		Does not take input.
+	.OUTPUTS
+		One or more alerts that contain alert information about the failing Hive device, when 
+		the device was last seen by Hive and the resolved device node in its current state.
+	.LINK
+		Get-HiveEvent
+	#>
+	[CmdletBinding()] [OutputType([System.Object[]])] param ()
+	$alarms = Get-HiveEvent -Days 1 | Where-Object {
+		$_.eventType -ilike 'ALARM_STATE_*'
+	}
+	$alerts = @()
+	$alarms | ForEach-Object {
+		$node = Get-HiveNode -Id $_.source
+		$alert = @{
+			'name'       = $node.name;
+			'lastSeen'   = $node.attributes.lastSeen.reportedValue;
+			'presence'   = $node.attributes.presence.reportedValue;
+			'node'       = $node;
+			'alertFacts' = $_;
+		}
+		$alerts += $alert
+		Write-Verbose $alerts.Length
+	}
+	return $alerts
 }
 
 function Get-HiveDeviceToken {

@@ -185,8 +185,9 @@ Function | Syntax
 --- | ---
 [Connect-HiveSession](Help/Connect-HiveSession.md) | `[-Credential] <pscredential> [<CommonParameters>]`
 [Disconnect-HiveSession](Help/Disconnect-HiveSession.md) | `[<CommonParameters>]`
+[Get-HiveAlert](Help/Get-HiveAlert.md) | `[<CommonParameters>]`
 [Get-HiveDeviceToken](Help/Get-HiveDeviceToken.md) | `[<CommonParameters>]`
-[Get-HiveEvent](Help/Get-HiveEvent.md) | `[<CommonParameters>]`
+[Get-HiveEvent](Help/Get-HiveEvent.md) | `[[-Days] <uint16>] [<CommonParameters>]`
 [Get-HiveHub](Help/Get-HiveHub.md) | `[-Minimal] [<CommonParameters>]`
 [Get-HiveLight](Help/Get-HiveLight.md) | `[-Minimal] [<CommonParameters>]`
 [Get-HiveNode](Help/Get-HiveNode.md) | `[[-Id] <guid>] [[-Filter] <array>] [-Minimal] [<CommonParameters>]`
