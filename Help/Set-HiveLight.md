@@ -17,8 +17,9 @@ Brightness, Hue, PowerState, ColourMode and ColourTemperature
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
-```powershell
+```
 # Simple script that increases the Brightness in increments of 5 until the maximum is reached and then reverses the direction and decreases the Brightness until minimum is reached and loops.
+```
 
 $light = Get-HiveLight | Select -First 1
 $dir = $true
@@ -30,7 +31,6 @@ while(1) {
 	# 300ms updates, be kind to Hive API, should probably avoid lower than this!
 	Sleep -m 300
 }
-```
 
 ## PARAMETERS
 
